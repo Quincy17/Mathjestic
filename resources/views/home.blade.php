@@ -14,7 +14,12 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    <p>{{ __('Selamat Datang di OlympiApp') }}</p>
+
+                    <!-- Tombol daftar soal di bagian kanan bawah -->
+                    <div class="d-flex justify-content-end mt-3">
+                        <a href="{{ route('soal.index') }}" class="btn btn-primary">Klik untuk daftar soal</a>
+                    </div>
                 </div>
             </div>
         </div>

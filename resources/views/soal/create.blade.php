@@ -17,7 +17,8 @@
             <label>File Soal</label>
             <input type="file" name="file" class="form-control" required>
         </div>
-        <button type="submit" class="btn btn-primary">Upload</button>
+        <a href="../soal" class="btn btn-primary" style="margin-top: 10px;">Kembali</a>
+        <button type="submit" class="btn btn-primary" style="margin-top: 10px; float:right;">Upload</button>
     </form>
 </div>
 @endsection
