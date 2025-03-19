@@ -14,6 +14,6 @@ class SoalModel extends Model
 
     public function user()
     {
-        return $this->belongsTo(UserModel::class, 'created_by');
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

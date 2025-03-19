@@ -1,38 +1,41 @@
 <?php
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SoalController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\HomeController;
+use App\Models\SoalModel;
 use Illuminate\Support\Facades\Auth;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-Route::middleware(['auth'])->group(function () {
-    
-});
-Route::get('/soal', [SoalController::class, 'index'])->name('soal.index');
-Route::get('/soal/create', [SoalController::class, 'create'])->middleware('admin');
-Route::post('/soal', [SoalController::class, 'store'])->middleware('admin');
+// ✅ Bisa diakses tanpa login
+Route::get('/home', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/soal', [SoalController::class, 'index'])->name('soal.index');
+
+// 🔒 Hanya bisa diakses setelah login
+Route::middleware(['auth'])->group(function () {
+    // ✅ Gunakan Route::resource tanpa perlu manual menulis create/store
+    Route::middleware('admin')->group(function () {
+        Route::resource('soal', SoalController::class)->except(['index', 'show']);
+    });
+
+    Route::get('/admin', [AdminController::class, 'index']);
+
+    Route::get('/soal/download/{id}', function ($id) {
+        $soal = SoalModel::findOrFail($id);
+        $filePath = 'soal_files/' . $soal->file_path;
+
+        if (!Storage::exists($filePath)) {
+            abort(404, 'File tidak ditemukan.');
+        }
+
+        return Storage::download($filePath, $soal->original_filename);
+    })->name('soal.download');
+});
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
