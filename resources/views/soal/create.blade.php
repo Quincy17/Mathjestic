@@ -5,7 +5,7 @@
     @endif
 
 <div class="container">
-    <h2>Upload Soal Baru</h2>
+    <h2>Upload Modul Baru</h2>
     <form action="{{ route('soal.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">

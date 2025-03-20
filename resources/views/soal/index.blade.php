@@ -6,7 +6,7 @@
 
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>Daftar Soal Olimpiade</h2>
+        <h2>Daftar Modul</h2>
         
         <!-- Form Searching -->
         <form action="{{ route('soal.index') }}" method="GET" class="d-flex">

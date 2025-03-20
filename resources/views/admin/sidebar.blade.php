@@ -43,6 +43,10 @@
             color: white !important; /* Warna teks berubah jadi putih */
         }
 
+        h4, .judul {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
 
     </style>
 </head>
@@ -52,10 +56,13 @@
         <h4 class="text-dark">Admin Panel</h4>
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a href="{{ route('soal.index') }}" class="nav-link text-dark">Daftar Soal</a>
+                <a href="{{ route('home') }}" class="nav-link text-dark">Home</a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('soal.create') }}" class="nav-link text-dark">Upload Soal</a>
+                <a href="{{ route('soal.index') }}" class="nav-link text-dark">Daftar Modul</a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('soal.create') }}" class="nav-link text-dark">Upload Modul</a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('admin.dataWebsite') }}" class="nav-link text-dark">Data Website</a>

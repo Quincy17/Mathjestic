@@ -5,7 +5,7 @@
     @endif
 
 <div class="container">
-    <h2>Edit Soal</h2>
+    <h2>Edit Modul</h2>
     <form action="{{ route('soal.update', $soal) }}" method="POST">
         @csrf
         @method('PUT')

@@ -1,6 +1,8 @@
 @extends('layouts.app')
-
 @section('content')
+@if(Auth::check() && Auth::user()->role === 'admin')
+        @include('admin.sidebar')  
+    @endif
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -18,7 +20,7 @@
 
                     <!-- Tombol daftar soal di bagian kanan bawah -->
                     <div class="d-flex justify-content-end mt-3">
-                        <a href="{{ route('soal.index') }}" class="btn btn-primary">Klik untuk daftar soal</a>
+                        <a href="{{ route('soal.index') }}" class="btn btn-primary">Klik untuk daftar modul</a>
                     </div>
                 </div>
             </div>
