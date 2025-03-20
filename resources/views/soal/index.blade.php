@@ -1,7 +1,7 @@
-@extends('layouts.app')
 @if(Auth::check() && Auth::user()->role === 'admin')
-@extends('admin.dashboard')
-@endif
+    @extends('admin.sidebar')
+    @include('admin.sidebar')  
+    @endif
 @section('content')
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-3">

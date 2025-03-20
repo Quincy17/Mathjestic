@@ -1,6 +1,8 @@
-@extends('layouts.app')
-@extends('admin.dashboard')
+@extends('admin.sidebar')
 @section('content')
+@if(Auth::check() && Auth::user()->role === 'admin')
+        @include('admin.sidebar')  
+    @endif
 <div class="container">
     <h2>Activity Control</h2>
     <table class="table">

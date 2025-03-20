@@ -1,5 +1,7 @@
-@extends('layouts.app')
-@extends('admin.dashboard')
+@extends('admin.sidebar')
+@if(Auth::check() && Auth::user()->role === 'admin')
+        @include('admin.sidebar')  
+    @endif
 @section('content')
 <div class="container">
     <h2>Upload Soal Baru</h2>
