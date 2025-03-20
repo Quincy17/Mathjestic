@@ -23,10 +23,11 @@
 
         .toggle-btn {
             position: absolute;
+            border-radius: 70%;
             top: 10px;
-            right: -50px; /* Pindahkan tombol ke luar sidebar */
-            background: black;
-            color: white;
+            right: 20px; /* Pindahkan tombol ke luar sidebar */
+            background: rgb(255, 255, 255);
+            color: rgb(0, 0, 0);
             border: none;
             padding: 8px 12px;
             cursor: pointer;
@@ -38,7 +39,7 @@
         }
 
         .sidebar.hidden .toggle-btn {
-            right: -60px; /* Tetap di luar sidebar */
+            right: -50px; /* Tetap di luar sidebar */
         }
 
         /* Agar konten tidak tertutup sidebar */
@@ -72,6 +73,11 @@
         h4, .judul {
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
+        }
+
+        .toggle-btn:hover {
+            
+            transition: all 0.1s ease-in;
         }
 
     </style>

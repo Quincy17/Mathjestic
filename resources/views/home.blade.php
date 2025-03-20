@@ -20,7 +20,7 @@
 
                     <!-- Tombol daftar soal di bagian kanan bawah -->
                     <div class="d-flex justify-content-end mt-3">
-                        <a href="{{ route('soal.index') }}" class="btn btn-primary">Klik untuk daftar modul</a>
+                        <a href="{{ route('soal.index') }}" class="btn btn-outline-dark">Klik untuk daftar modul</a>
                     </div>
                 </div>
             </div>
