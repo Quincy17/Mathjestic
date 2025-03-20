@@ -8,11 +8,11 @@ class LogsModel extends Model
 {
     use HasFactory;
 
-    protected $table = 'logs'; // Menyesuaikan dengan nama tabel
+    protected $table = 'logs';
     protected $fillable = ['user_id', 'activity', 'description'];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

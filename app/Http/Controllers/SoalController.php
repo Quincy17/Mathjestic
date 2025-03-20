@@ -72,6 +72,14 @@ class SoalController extends Controller
             abort(404, 'File tidak ditemukan.');
         }
 
+        $userId = Auth::check() ? Auth::id() : null;
+
+        LogsModel::create([
+            'user_id' => Auth::id(), // ID pengguna yang mengunduh soal
+            'activity' => 'download_soal',
+            'description' => 'Siswa mengunduh soal: ' . $soal->title,
+        ]);
+
         return Storage::download($filePath, $soal->original_filename);
     }
 
