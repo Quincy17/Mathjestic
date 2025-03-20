@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h2>Edit Soal</h2>
-    <form action="{{ route('soal.update', $soal->id) }}" method="POST">
+    <form action="{{ route('soal.update', $soal) }}" method="POST">
         @csrf
         @method('PUT')
 
@@ -17,8 +17,8 @@
             <textarea class="form-control" id="description" name="description" rows="3" required>{{ $soal->description }}</textarea>
         </div>
 
-        <button type="submit" class="btn btn-success">Simpan</button>
-        <a href="{{ route('soal.index') }}" class="btn btn-secondary">Batal</a>
+        <button type="submit" class="btn btn-primary">Simpan</button>
+        <a href="{{ route('soal.index') }}" class="btn btn-danger">Batal</a>
     </form>
 </div>
 @endsection

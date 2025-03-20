@@ -2,14 +2,24 @@
 
 @section('content')
 <div class="container">
-    <h2>Daftar Soal Olimpiade</h2>
-     <!-- Tombol Upload Soal di Sebelah Kanan -->
-     <div class="d-flex justify-content-between mb-3">
-        <div></div> <!-- Untuk membuat tombol tetap di kanan -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Daftar Soal Olimpiade</h2>
+        
+        <!-- Form Searching -->
+        <form action="{{ route('soal.index') }}" method="GET" class="d-flex">
+            <input type="text" name="search" class="form-control me-2" placeholder="Cari soal..." value="{{ request('search') }}">
+            <button type="submit" class="btn btn-outline-primary">Cari</button>
+        </form>
+    </div>
+
+    <!-- Tombol Upload Soal -->
+    <div class="d-flex justify-content-between mb-3">
+        <div></div> <!-- Agar tombol tetap di kanan -->
         @if(Auth::check() && Auth::user()->role === 'admin')
             <a href="{{ route('soal.create') }}" class="btn btn-primary">Upload Soal</a>
         @endif
     </div>
+
     <table class="table">
         <thead>
             <tr>
@@ -22,11 +32,11 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($soals as $soal)
+            @forelse ($soals as $soal)
             <tr>
                 <td>{{ $soal->title }}</td>
                 <td>{{ $soal->description }}</td>
-                <td><a href="{{ asset('storage/soal_files/' . $soal->file_path) }}" download>{{ $soal->original_filename }}Download</a></td>
+                <td><a href="{{ asset('storage/soal_files/' . $soal->file_path) }}" download>{{ $soal->original_filename }} Download</a></td>
 
                 @if(Auth::check() && Auth::user()->role === 'admin')
                 <td>
@@ -41,7 +51,11 @@
                 </td>
                 @endif
             </tr>
-            @endforeach
+            @empty
+            <tr>
+                <td colspan="4" class="text-center">Tidak ada soal ditemukan.</td>
+            </tr>
+            @endforelse
         </tbody>
     </table>
 </div>
