@@ -14,7 +14,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            background-color: #3b3737;
+            background-color: #f3f3f3;
             color: white;
             padding: 15px;
             z-index: 1051; /* ✅ Lebih tinggi dari navbar */
@@ -26,24 +26,42 @@
             margin-left: 250px;
             padding: 20px;
         }
+        
+        .sidebar .nav-item {
+            border-top: 1px solid rgba(0, 0, 0, 0); /* Garis atas */
+            border-bottom: 1px solid rgba(0, 0, 0, 0.2); /* Garis bawah */
+        }
+
+        .sidebar .nav-link {
+            color: rgb(126, 126, 126) !important; /* Warna teks tetap hitam */
+            padding: 10px 15px; /* Tambahkan ruang agar terlihat lebih rapi */
+            transition: background-color 0.3s ease-in-out; /* Animasi efek hover */
+        }
+
+        .sidebar .nav-link:hover {
+            background-color: rgb(51, 50, 50); /* Warna latar belakang saat hover */
+            color: white !important; /* Warna teks berubah jadi putih */
+        }
+
+
     </style>
 </head>
 <body>
     <!-- Sidebar -->
     <nav class="sidebar">
-        <h4>Admin Panel</h4>
+        <h4 class="text-dark">Admin Panel</h4>
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a href="{{ route('soal.index') }}" class="nav-link text-white">Daftar Soal</a>
+                <a href="{{ route('soal.index') }}" class="nav-link text-dark">Daftar Soal</a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('soal.create') }}" class="nav-link text-white">Upload Soal</a>
+                <a href="{{ route('soal.create') }}" class="nav-link text-dark">Upload Soal</a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('admin.dataWebsite') }}" class="nav-link text-white">Data Website</a>
+                <a href="{{ route('admin.dataWebsite') }}" class="nav-link text-dark">Data Website</a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('admin.logs') }}" class="nav-link text-white">Logs Aktivitas</a>
+                <a href="{{ route('admin.logs') }}" class="nav-link text-dark">Logs Aktivitas</a>
             </li>
         </ul>
     </nav>
