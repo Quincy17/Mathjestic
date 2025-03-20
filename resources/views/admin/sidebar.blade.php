@@ -68,7 +68,7 @@
                 <a href="{{ route('admin.dataWebsite') }}" class="nav-link text-dark">Data Website</a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('admin.logs') }}" class="nav-link text-dark">Logs Aktivitas</a>
+                <a href="{{ route('admin.logs') }}" class="nav-link text-dark">Log Aktivitas</a>
             </li>
         </ul>
     </nav>

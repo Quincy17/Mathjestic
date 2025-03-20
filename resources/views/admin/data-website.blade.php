@@ -15,15 +15,15 @@
         </thead>
         <tbody>
             <tr>
-                <td>Total Soal</td>
+                <td>Jumlah Soal</td>
                 <td>{{ $totalSoal }}</td>
             </tr>
             <tr>
-                <td>Total Aktivitas yang Tercatat</td>
+                <td>Jumlah Aktivitas yang Tercatat</td>
                 <td>{{ $totalLogs }}</td>
             </tr>
             <tr>
-                <td>Total Unduhan Soal</td>
+                <td>Jumlah Unduhan Soal</td>
                 <td>{{ $totalUnduhan }}</td>
             </tr>
         </tbody>
