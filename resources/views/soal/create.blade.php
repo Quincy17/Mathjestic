@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@extends('admin.dashboard')
 @section('content')
 <div class="container">
     <h2>Upload Soal Baru</h2>

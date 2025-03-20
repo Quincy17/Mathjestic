@@ -1,8 +1,8 @@
 @extends('layouts.app')
-
+@extends('admin.dashboard')
 @section('content')
 <div class="container">
-    <h2>Monitoring Aktivitas</h2>
+    <h2>Activity Control</h2>
     <table class="table">
         <thead>
             <tr>
@@ -15,8 +15,8 @@
         <tbody>
             @foreach ($logs as $log)
             <tr>
-                <td>{{ $log->user->name ?? 'Guest' }}</td>
-                <td>{{ $log->action }}</td>
+                <td>{{ $log->user ? $log->user->name : 'Guest' }}</td>
+                <td>{{ $log->activity }}</td>
                 <td>{{ $log->description }}</td>
                 <td>{{ $log->created_at }}</td>
             </tr>
