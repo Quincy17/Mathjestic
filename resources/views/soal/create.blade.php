@@ -1,8 +1,9 @@
-@extends('admin.sidebar')
+@extends('layouts.app')
+@section('content')
 @if(Auth::check() && Auth::user()->role === 'admin')
         @include('admin.sidebar')  
     @endif
-@section('content')
+
 <div class="container">
     <h2>Upload Soal Baru</h2>
     <form action="{{ route('soal.store') }}" method="POST" enctype="multipart/form-data">

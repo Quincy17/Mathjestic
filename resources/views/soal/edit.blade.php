@@ -1,6 +1,9 @@
 @extends('layouts.app')
-@extends('admin.dashboard')
 @section('content')
+@if(Auth::check() && Auth::user()->role === 'admin')
+        @include('admin.sidebar')  
+    @endif
+
 <div class="container">
     <h2>Edit Soal</h2>
     <form action="{{ route('soal.update', $soal) }}" method="POST">

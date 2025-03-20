@@ -1,8 +1,9 @@
+@extends('layouts.app')
+@section('content')
 @if(Auth::check() && Auth::user()->role === 'admin')
-    @extends('admin.sidebar')
     @include('admin.sidebar')  
     @endif
-@section('content')
+
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2>Daftar Soal Olimpiade</h2>
