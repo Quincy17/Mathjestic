@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Models\SoalModel;
 use Illuminate\Support\Facades\Auth;
+use App\Models\LogsModel;
 
 // ✅ Bisa diakses tanpa login
 Route::get('/home', [HomeController::class, 'index']);
@@ -37,5 +38,10 @@ Route::middleware(['auth'])->group(function () {
         return Storage::download($filePath, $soal->original_filename);
     })->name('soal.download');
 });
+
+Route::get('/admin/logs', function () {
+    $logs = LogsModel::latest()->get();
+    return view('admin.logs', compact('logs'));
+})->middleware('admin');
 
 Auth::routes();

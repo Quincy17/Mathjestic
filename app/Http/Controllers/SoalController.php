@@ -5,14 +5,26 @@ use Illuminate\Http\Request;
 use App\Models\SoalModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Models\LogsModel;
 
 class SoalController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $soals = SoalModel::all();
+        $query = SoalModel::query();
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('title', 'LIKE', "%$search%")
+                ->orWhere('description', 'LIKE', "%$search%");
+        }
+
+        $soals = $query->get();
+        
         return view('soal.index', compact('soals'));
     }
+
+
 
     public function create()
     {
@@ -39,6 +51,12 @@ class SoalController extends Controller
             'file_path' => $filename,
             'original_filename' => $file->getClientOriginalName(),
             'created_by' => Auth::id(),
+        ]);
+
+        LogsModel::create([
+            'user_id' => Auth::id(),
+            'activity' => 'create_soal',
+            'description' => 'Menambahkan soal : ' . $request->title,
         ]);
 
         return redirect()->back()->with('success', 'Soal berhasil diunggah!');
@@ -75,6 +93,12 @@ class SoalController extends Controller
         $soal->description = $request->description;
         $soal->save();
 
+        LogsModel::create([
+            'user_id' => Auth::id(),
+            'activity' => 'update_soal',
+            'description' => 'Memperbarui soal : ' . $request->title,
+        ]);
+        
         return redirect()->route('soal.index')->with('success', 'Soal berhasil diperbarui.');
     }
 
@@ -87,6 +111,12 @@ class SoalController extends Controller
 
         // Hapus dari database
         $soal->delete();
+
+        LogsModel::create([
+            'user_id' => Auth::id(),
+            'activity' => 'delete_soal',
+            'description' => 'Menghapus soal : ' . $soal->title,
+        ]);
 
         return redirect()->route('soal.index')->with('success', 'Soal berhasil dihapus.');
     }
