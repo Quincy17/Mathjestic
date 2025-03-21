@@ -9,13 +9,14 @@ use App\Http\Controllers\HomeController;
 use App\Models\SoalModel;
 use Illuminate\Support\Facades\Auth;
 use App\Models\LogsModel;
+use App\Http\Controllers\Auth\LoginController;
 
 // ✅ Bisa diakses tanpa login
 Route::get('/home', [HomeController::class, 'index']);
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/soal', [SoalController::class, 'index'])->name('soal.index');
 
 // 🔒 Hanya bisa diakses setelah login
@@ -27,17 +28,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/admin', [AdminController::class, 'index']);
 
-    Route::get('/soal/download/{id}', function ($id) {
-        $soal = SoalModel::findOrFail($id);
-        $filePath = 'soal_files/' . $soal->file_path;
+    Route::get('/soal/download/{soal_id}', [SoalController::class, 'download'])->name('soal.download');
 
-        if (!Storage::exists($filePath)) {
-            abort(404, 'File tidak ditemukan.');
-        }
-
-        return Storage::download($filePath, $soal->original_filename);
-    })->name('soal.download');
-});
+}); 
 
 Route::get('/admin/logs', function () {
     $logs = LogsModel::latest()->get();
@@ -45,15 +38,11 @@ Route::get('/admin/logs', function () {
 })->middleware('admin');
 
 Route::middleware(['auth', 'admin'])->group(function () {
-    
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
-
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/logs', [AdminController::class, 'logs'])->name('admin.logs');
     Route::get('/admin/data-website', [AdminController::class, 'dataWebsite'])->name('admin.dataWebsite');
 });
+
    
 
 Auth::routes();

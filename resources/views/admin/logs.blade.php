@@ -9,7 +9,7 @@
         <thead>
             <tr>
                 <th>User</th>
-                <th>Aksi</th>
+                <th>Aktivitas</th>
                 <th>Deskripsi</th>
                 <th>Waktu</th>
             </tr>

@@ -27,7 +27,7 @@
         <thead>
             <tr>
                 <th>Title</th>
-                <th>Description</th>
+                <th>Kategori</th>
                 <th>Download</th>
                 @if(Auth::check() && Auth::user()->role === 'admin')
                 <th>Action</th>
@@ -39,14 +39,14 @@
             <tr>
                 <td>{{ $soal->title }}</td>
                 <td>{{ $soal->description }}</td>
-                <td><a href="{{ asset('storage/soal_files/' . $soal->file_path) }}" download>{{ $soal->original_filename }} Download</a></td>
+                <td><a href="{{ route('soal.download', $soal->soal_id) }}" class="btn btn-outline-primary">Download</a></td>
 
                 @if(Auth::check() && Auth::user()->role === 'admin')
                 <td>
                     <!-- Tombol Edit -->
-                    <a href="{{ route('soal.edit', $soal) }}" class="btn btn-primary btn-sm">Edit</a>
+                    <a href="{{ route('soal.edit', $soal->soal_id) }}" class="btn btn-primary btn-sm">Edit</a>
                     <!-- Tombol Delete dengan Form -->
-                    <form action="{{ route('soal.destroy', $soal) }}" method="POST" style="display:inline;">
+                    <form action="{{ route('soal.destroy', $soal->soal_id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus soal ini?')">Delete</button>
