@@ -87,19 +87,25 @@
     <!-- Sidebar -->
     <nav class="sidebar">
         <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
-        <h4 class="text-dark">Admin Panel</h4>
+        <h4 class="text-dark">OlympiApp</h4>
         <ul class="nav flex-column">
+
+            @if(Auth::check() && Auth::user()->role === 'admin')
+            <li class="nav-item">
+                <a href="{{ route('admin.dashboard') }}" class="nav-link text-dark">Dashboard</a>
+            </li>
+            @else
             <li class="nav-item">
                 <a href="{{ route('home') }}" class="nav-link text-dark">Home</a>
             </li>
+            @endif
+
+            
             <li class="nav-item">
                 <a href="{{ route('soal.index') }}" class="nav-link text-dark">Daftar Modul</a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('soal.create') }}" class="nav-link text-dark">Upload Modul</a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('admin.dataWebsite') }}" class="nav-link text-dark">Data Website</a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('admin.logs') }}" class="nav-link text-dark">Log Aktivitas</a>
