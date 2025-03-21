@@ -9,16 +9,12 @@
     <form action="{{ route('soal.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
-            <label>Judul</label>
-            <input type="text" name="title" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label>Deskripsi</label>
+            <label>Kategori</label>
             <textarea name="description" class="form-control" required></textarea>
         </div>
         <div class="form-group">
             <label>File Soal</label>
-            <input type="file" name="file" class="form-control" required>
+            <input type="file" name="files[]" class="form-control" required multiple>
         </div>
         <a href="../soal" class="btn btn-primary" style="margin-top: 10px;">Kembali</a>
         <button type="submit" class="btn btn-primary" style="margin-top: 10px; float:right;">Upload</button>
