@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('logs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->string('action');
+            $table->string('activity');
             $table->string('description');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('user_id')->references('user_id')->on('m_user')->onDelete('set null');
         });
     }
 
