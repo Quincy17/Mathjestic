@@ -10,7 +10,13 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard');
+        // Ambil data statistik untuk dashboard
+        $totalSoal = SoalModel::count();
+        $totalUnduhan = LogsModel::where('activity', 'download_soal')->count();
+        $totalLogs = LogsModel::count();
+        $logs = LogsModel::latest()->take(5)->get();
+
+        return view('admin.dashboard', compact('totalSoal', 'totalUnduhan', 'totalLogs', 'logs'));
     }
 
     public function logs()
@@ -23,9 +29,7 @@ class AdminController extends Controller
     {
         $totalSoal = SoalModel::count();
         $totalLogs = LogsModel::count();
-
-        // Jika ada kolom yang mencatat unduhan di logs
-        $totalUnduhan = LogsModel::where('activity', 'download')->count();
+        $totalUnduhan = LogsModel::where('activity', 'download_soal')->count();
 
         return view('admin.data-website', compact('totalSoal', 'totalLogs', 'totalUnduhan'));
     }

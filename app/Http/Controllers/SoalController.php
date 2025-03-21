@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -20,11 +21,8 @@ class SoalController extends Controller
         }
 
         $soals = $query->get();
-        
         return view('soal.index', compact('soals'));
     }
-
-
 
     public function create()
     {
@@ -34,97 +32,115 @@ class SoalController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'file' => 'required|file|max:2048',
+            'files.*' => 'required|file|max:2048', // Validasi array file
         ]);
 
-        $file = $request->file('file');
-        $filename = time() . '_' . $file->getClientOriginalName();
+        foreach ($request->file('files') as $file) {
+            $filename = time() . '_' . $file->getClientOriginalName();
 
-        // Simpan ke `storage/app/public/soal_files/` agar bisa diakses melalui symlink
-        $file->storeAs('public/soal_files', $filename);
+            // Simpan ke storage
+            $file->storeAs('public/soal_files', $filename);
 
-        SoalModel::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'file_path' => $filename,
-            'original_filename' => $file->getClientOriginalName(),
-            'created_by' => Auth::id(),
-        ]);
+            // Simpan ke database
+            $soal = SoalModel::create([
+                'title' => pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME), // Judul diambil dari nama file tanpa ekstensi
+                'description' => $request->description,    
+                'file_path' => $filename,   
+                'original_filename' => $file->getClientOriginalName(),
+                'created_by' => Auth::id(),
+            ]);
 
-        LogsModel::create([
-            'user_id' => Auth::id(),
-            'activity' => 'create_soal',
-            'description' => 'Menambahkan soal : ' . $request->title,
-        ]);
+            // Simpan ke log jika user login
+            if (Auth::check()) {
+                LogsModel::create([
+                    'user_id' => Auth::id(),
+                    'activity' => 'create_soal',
+                    'description' => 'Menambahkan soal: ' . $soal->title,
+                ]);
+            }
+        }
 
         return redirect()->back()->with('success', 'Soal berhasil diunggah!');
     }
 
-
-        public function download($id)
+    public function download($soal_id)
     {
-        $soal = SoalModel::findOrFail($id); // Cari soal berdasarkan ID
-        $filePath = 'soal_files/' . $soal->file_path; // Sesuaikan dengan penyimpanan file
+        $soal = SoalModel::findOrFail($soal_id);
+        $filePath = 'public/soal_files/' . $soal->file_path;
 
+        // Gunakan Storage::path() agar file bisa ditemukan dengan benar
         if (!Storage::exists($filePath)) {
-            abort(404, 'File tidak ditemukan.');
+            return redirect()->back()->with('error', 'File tidak ditemukan.');
         }
 
-        $userId = Auth::check() ? Auth::id() : null;
+        // Pastikan log hanya dicatat jika user login   
+        if (Auth::check()) {
+            $existingLog = LogsModel::where('user_id', Auth::id())
+                ->where('activity', 'download_soal')
+                ->where('description', 'Siswa mengunduh soal: ' . $soal->title)
+                ->where('created_at', '>=', now()->subSeconds(3)) // Cek dalam 3 detik terakhir
+                ->exists();
+    
+            if (!$existingLog) {
+                LogsModel::create([ 
+                    'user_id' => Auth::id(),
+                    'activity' => 'download_soal',
+                    'description' => 'Siswa mengunduh soal: ' . $soal->title,
+                ]);
+            }
+        }
 
-        LogsModel::create([
-            'user_id' => Auth::id(), // ID pengguna yang mengunduh soal
-            'activity' => 'download_soal',
-            'description' => 'Siswa mengunduh soal: ' . $soal->title,
-        ]);
-
-        return Storage::download($filePath, $soal->original_filename);
+        return response()->download(storage_path('app/' . $filePath), $soal->original_filename);
     }
 
-    public function edit($id)
+    public function edit($soal_id)
     {
-        $soal = SoalModel::findOrFail($id);
+        $soal = SoalModel::findOrFail($soal_id);
         return view('soal.edit', compact('soal'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $soal_id)
     {
         $request->validate([
             'title' => 'required',
             'description' => 'required',
         ]);
 
-        $soal = SoalModel::findOrFail($id);
-        $soal->title = $request->title;
-        $soal->description = $request->description;
-        $soal->save();
-
-        LogsModel::create([
-            'user_id' => Auth::id(),
-            'activity' => 'update_soal',
-            'description' => 'Memperbarui soal : ' . $request->title,
+        $soal = SoalModel::findOrFail($soal_id);
+        $soal->update([
+            'title' => $request->title,
+            'description' => $request->description,
         ]);
-        
+
+        if (Auth::check()) {
+            LogsModel::create([
+                'user_id' => Auth::id(),
+                'activity' => 'update_soal',
+                'description' => 'Memperbarui soal: ' . $request->title,
+            ]);
+        }
+
         return redirect()->route('soal.index')->with('success', 'Soal berhasil diperbarui.');
     }
 
-    public function destroy($id)
+    public function destroy($soal_id)
     {
-        $soal = SoalModel::findOrFail($id);
+        $soal = SoalModel::findOrFail($soal_id);
 
-        // Hapus file dari storage
-        Storage::delete('soal_files/' . $soal->file_path);
+        // Hapus file jika ada
+        if (Storage::exists('public/soal_files/' . $soal->file_path)) {
+            Storage::delete('public/soal_files/' . $soal->file_path);
+        }
 
-        // Hapus dari database
         $soal->delete();
 
-        LogsModel::create([
-            'user_id' => Auth::id(),
-            'activity' => 'delete_soal',
-            'description' => 'Menghapus soal : ' . $soal->title,
-        ]);
+        if (Auth::check()) {
+            LogsModel::create([
+                'user_id' => Auth::id(),
+                'activity' => 'delete_soal',
+                'description' => 'Menghapus soal: ' . $soal->title,
+            ]);
+        }
 
         return redirect()->route('soal.index')->with('success', 'Soal berhasil dihapus.');
     }
