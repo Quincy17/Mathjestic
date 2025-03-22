@@ -10,7 +10,7 @@
         
         <!-- Form Searching -->
         <form action="{{ route('soal.index') }}" method="GET" class="d-flex">
-            <input type="text" name="search" class="form-control me-2" placeholder="Cari soal..." value="{{ request('search') }}">
+            <input type="text" name="search" class="form-control me-2 " placeholder="Cari soal..." value="{{ request('search') }}">
             <button type="submit" class="btn btn-outline-primary">Cari</button>
         </form>
     </div>
@@ -19,11 +19,11 @@
     <div class="d-flex justify-content-between mb-3">
         <div></div> <!-- Agar tombol tetap di kanan -->
         @if(Auth::check() && Auth::user()->role === 'admin')
-            <a href="{{ route('soal.create') }}" class="btn btn-primary">Upload Soal</a>
+            <a href="{{ route('soal.create') }}" class="btn btn-primary shadow">Upload Soal</a>
         @endif
     </div>
 
-    <table class="table">
+    <table class="table shadow">
         <thead>
             <tr>
                 <th>Title</th>

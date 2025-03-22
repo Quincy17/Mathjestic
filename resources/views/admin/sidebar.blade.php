@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    
+    <script src="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/icons.min.js"></script>
+
     <style>
         /* Styling Sidebar */
         .sidebar {
@@ -14,11 +15,26 @@
             position: fixed;
             top: 0;
             left: 0;
-            background-color: #f3f3f3;
+            background-color: #ffffff;
             color: white;
             padding: 15px;
             z-index: 1051; /* ✅ Lebih tinggi dari navbar */
             transition: all 0.3s ease;
+        }
+
+        .sidebar .nav-link {
+            font-size: 16px; /* Ubah ukuran font sesuai keinginan */
+        }
+
+        .sidebar .nav-link svg {
+            width: 18px; /* Sesuaikan ukuran ikon */
+            height: 18px;
+            margin-right: 8px; /* Beri sedikit jarak antara ikon dan teks */
+            vertical-align: middle; /* Posisi sejajar */
+        }
+
+        body{
+            background-color: #f3f3f3;
         }
 
         .toggle-btn {
@@ -54,20 +70,18 @@
             margin-left: 0;
         }
         
-        .sidebar .nav-item {
-            border-top: 1px solid rgba(0, 0, 0, 0); /* Garis atas */
-            border-bottom: 1px solid rgba(0, 0, 0, 0.2); /* Garis bawah */
-        }
 
         .sidebar .nav-link {
             color: rgb(126, 126, 126) !important; /* Warna teks tetap hitam */
             padding: 10px 15px; /* Tambahkan ruang agar terlihat lebih rapi */
             transition: background-color 0.3s ease-in-out; /* Animasi efek hover */
+            border-radius: 5%;
         }
 
         .sidebar .nav-link:hover {
             background-color: rgb(51, 50, 50); /* Warna latar belakang saat hover */
             color: white !important; /* Warna teks berubah jadi putih */
+            border-radius: 5%;
         }
 
         h4, .judul {
@@ -80,6 +94,14 @@
             transition: all 0.1s ease-in;
         }
 
+        .sidebar .nav-link.active {
+            background-color: black !important; /* Latar belakang hitam */
+            color: white !important; /* Teks putih */
+            font-weight: bold; /* Tebalkan teks */
+            border-radius: 5%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.8); /* Efek bayangan */
+        }   
+
     </style>
 </head>
 <body>
@@ -89,28 +111,46 @@
         <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
         <h4 class="text-dark">OlympiApp</h4>
         <ul class="nav flex-column">
-
             @if(Auth::check() && Auth::user()->role === 'admin')
             <li class="nav-item">
-                <a href="{{ route('admin.dashboard') }}" class="nav-link text-dark">Dashboard</a>
+                <a href="{{ route('admin.dashboard') }}" 
+                   class="nav-link text-dark {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" style="margin-bottom: 5px; margin-top: 10px;">
+                   <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-dashboard"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 13m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M13.45 11.55l2.05 -2.05" /><path d="M6.4 20a9 9 0 1 1 11.2 0z" /></svg>
+                    Dashboard
+                </a>
             </li>
             @else
             <li class="nav-item">
-                <a href="{{ route('home') }}" class="nav-link text-dark">Home</a>
+                <a href="{{ route('home') }}" 
+                   class="nav-link text-dark {{ request()->routeIs('home') ? 'active' : '' }}">
+                   Home
+                </a>
             </li>
             @endif
-
-            
+        
             <li class="nav-item">
-                <a href="{{ route('soal.index') }}" class="nav-link text-dark">Daftar Modul</a>
+                <a href="{{ route('soal.index') }}" 
+                   class="nav-link text-dark {{ request()->routeIs('soal.index') ? 'active' : '' }}" style="margin-bottom: 5px;">
+                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-book-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z" /><path d="M19 16h-12a2 2 0 0 0 -2 2" /><path d="M9 8h6" /></svg>
+                   Daftar Modul
+                </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('soal.create') }}" class="nav-link text-dark">Upload Modul</a>
+                <a href="{{ route('soal.create') }}" 
+                   class="nav-link text-dark {{ request()->routeIs('soal.create') ? 'active' : '' }}" style="margin-bottom: 5px;">
+                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-upload"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 9l5 -5l5 5" /><path d="M12 4l0 12" /></svg>
+                   Upload Modul
+                </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('admin.logs') }}" class="nav-link text-dark">Log Aktivitas</a>
+                <a href="{{ route('admin.logs') }}" 
+                   class="nav-link text-dark {{ request()->routeIs('admin.logs') ? 'active' : '' }}" style="margin-bottom: 5px;">
+                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-logs"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 12h.01" /><path d="M4 6h.01" /><path d="M4 18h.01" /><path d="M8 18h2" /><path d="M8 12h2" /><path d="M8 6h2" /><path d="M14 6h6" /><path d="M14 12h6" /><path d="M14 18h6" /></svg>
+                   Log Aktivitas
+                </a>
             </li>
         </ul>
+        
     </nav>
 
     <script>

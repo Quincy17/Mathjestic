@@ -5,7 +5,8 @@
     @endif
 <div class="container">
     <h2>Activity Control</h2>
-    <table class="table">
+    <br>
+    <table class="table shadow">
         <thead>
             <tr>
                 <th>User</th>
