@@ -65,7 +65,7 @@ class BlogController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required',
-            'image' => 'nullable|image|max:2048'
+            'image' => 'nullable|image|max:4096'
         ]);
 
         if ($request->hasFile('image')) {

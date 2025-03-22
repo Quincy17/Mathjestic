@@ -2,12 +2,16 @@
 @section('content')
     @if(Auth::check() && Auth::user()->role === 'admin')
         @include('admin.sidebar')  
+    @else
+        @include('admin.sidebar-user')  
     @endif
 
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-3">
     <h2>Daftar Blog</h2>
+    @if(Auth::check() && Auth::user()->role === 'admin')
     <a href="{{ route('blogs.create') }}" class="btn btn-primary mb-3">Tulis Blog</a>
+    @endif
     </div>
     @foreach ($blogs as $blog)
         <div class="card mb-3">

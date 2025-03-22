@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\BlogModel; // Import the BlogModel class
 
 class HomeController extends Controller
 {
@@ -23,6 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $blogs = BlogModel::latest()->take(5)->get(); // Ambil 5 blog terbaru
+        return view('home', compact('blogs'));
     }
 }

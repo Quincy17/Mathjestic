@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BlogController;
 use App\Models\SoalModel;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use App\Models\LogsModel;
 use App\Http\Controllers\Auth\LoginController;
@@ -52,6 +53,5 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/data-website', [AdminController::class, 'dataWebsite'])->name('admin.dataWebsite');
 });
 
-   
 
 Auth::routes();

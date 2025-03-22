@@ -2,7 +2,9 @@
 @section('content')
 @if(Auth::check() && Auth::user()->role === 'admin')
     @include('admin.sidebar')  
-    @endif
+@else
+    @include('admin.sidebar-user')  
+@endif
 
     <style>
         .table {
@@ -72,6 +74,7 @@
             @endforelse
         </tbody>
     </table>
+    <a href="{{ route('home') }}" class="btn btn-primary" style="margin-top: 10px;">Kembali</a>
     <div class="d-flex justify-content-center mt-3" style="float: right; margin-right: 20px;">
         {{ $soals->links('pagination::bootstrap-5') }}
     </div>
