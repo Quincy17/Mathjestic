@@ -4,6 +4,15 @@
     @include('admin.sidebar')  
     @endif
 
+    <style>
+        .table {
+            border-radius: 10px; /* Sesuaikan radius untuk tingkat kelengkungan */
+            overflow: hidden; /* Agar sudut tetap melengkung meskipun ada border */
+        }   
+        .table th, .table td {
+            padding-left: 20px; /* Sesuaikan padding untuk kenyamanan */
+        }
+    </style>
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2>Daftar Modul</h2>
@@ -26,7 +35,7 @@
     <table class="table shadow">
         <thead>
             <tr>
-                <th>Title</th>
+                <th style="max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Title</th>
                 <th>Kategori</th>
                 <th>Download</th>
                 @if(Auth::check() && Auth::user()->role === 'admin')
@@ -37,7 +46,9 @@
         <tbody>
             @forelse ($soals as $soal)
             <tr>
-                <td>{{ $soal->title }}</td>
+                <td style="max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                    {{ $soal->title }}
+                </td>                
                 <td>{{ $soal->description }}</td>
                 <td><a href="{{ route('soal.download', $soal->soal_id) }}" class="btn btn-outline-primary">Download</a></td>
 
@@ -61,5 +72,8 @@
             @endforelse
         </tbody>
     </table>
+    <div class="d-flex justify-content-center mt-3" style="float: right; margin-right: 20px;">
+        {{ $soals->links('pagination::bootstrap-5') }}
+    </div>
 </div>
 @endsection

@@ -20,6 +20,7 @@
             padding: 15px;
             z-index: 1051; /* ✅ Lebih tinggi dari navbar */
             transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Efek bayangan */
         }
 
         .sidebar .nav-link {
@@ -79,7 +80,7 @@
         }
 
         .sidebar .nav-link:hover {
-            background-color: rgb(51, 50, 50); /* Warna latar belakang saat hover */
+            background-color: #6268c5; /* Warna latar belakang saat hover */
             color: white !important; /* Warna teks berubah jadi putih */
             border-radius: 5%;
         }
@@ -95,7 +96,7 @@
         }
 
         .sidebar .nav-link.active {
-            background-color: black !important; /* Latar belakang hitam */
+            background-color: #4D55CC !important; /* Latar belakang hitam */
             color: white !important; /* Teks putih */
             font-weight: bold; /* Tebalkan teks */
             border-radius: 5%;
@@ -111,19 +112,19 @@
         <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
         <h4 class="text-dark">OlympiApp</h4>
         <ul class="nav flex-column">
+            <li class="nav-item">
+                <a href="{{ route('home') }}" 
+                   class="nav-link text-dark {{ request()->routeIs('home') ? 'active' : '' }}" style="margin-bottom: 5px; margin-top: 10px;">
+                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-home"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
+                   Home
+                </a>
+            </li>
             @if(Auth::check() && Auth::user()->role === 'admin')
             <li class="nav-item">
                 <a href="{{ route('admin.dashboard') }}" 
-                   class="nav-link text-dark {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" style="margin-bottom: 5px; margin-top: 10px;">
-                   <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-dashboard"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 13m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M13.45 11.55l2.05 -2.05" /><path d="M6.4 20a9 9 0 1 1 11.2 0z" /></svg>
-                    Dashboard
-                </a>
-            </li>
-            @else
-            <li class="nav-item">
-                <a href="{{ route('home') }}" 
-                   class="nav-link text-dark {{ request()->routeIs('home') ? 'active' : '' }}">
-                   Home
+                   class="nav-link text-dark {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" style="margin-bottom: 5px;">
+                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-dashboard"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 13m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M13.45 11.55l2.05 -2.05" /><path d="M6.4 20a9 9 0 1 1 11.2 0z" /></svg>
+                    Admin Dashboard
                 </a>
             </li>
             @endif

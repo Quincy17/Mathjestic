@@ -3,13 +3,16 @@
     @if(Auth::check() && Auth::user()->role === 'admin')
         @include('admin.sidebar')  
     @endif
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <div class="container mt-4">
     <h2 class="mb-4">Admin Dashboard</h2>
 
     <!-- Statistik -->
     <div class="row">
         <div class="col-md-4">
-            <div class="card text-center shadow">
+            <div class="card text-center shadow" style="height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                 <div class="card-body">
                     <h5 class="card-title">Jumlah Modul</h5>
                     <h3>{{ $totalSoal }}</h3>
@@ -18,7 +21,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card text-center shadow">
+            <div class="card text-center shadow" style="height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                 <div class="card-body">
                     <h5 class="card-title">Jumlah Aktivitas</h5>
                     <h3>{{ $totalLogs }}</h3>
@@ -26,16 +29,17 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">  
-            <div class="card text-center shadow">
+        <div class="col-md-4">
+            <div class="card text-center shadow" style="height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                 <div class="card-body">
-                    <h5 class="card-title">Jumlah Unduhan</h5>
-                    <h3>{{ $totalUnduhan }}</h3>
-                    <a href="#" class="btn btn-outline-success">Lihat Detail</a>
-                </div>  
+                    <h5 class="card-title">Statistik Upload Soal per Bulan</h5>
+                    <canvas id="soalChart" width="300" height="200"></canvas>
+                </div>
             </div>
         </div>
     </div>
+    
+
 
     <!-- Log Aktivitas -->
     <div class="row mt-4">
@@ -66,5 +70,34 @@
             </div>
         </div>
     </div>
+    <script>
+        var ctx = document.getElementById('soalChart').getContext('2d');
+        var soalChart = new Chart(ctx, {
+            type: 'line', // Gunakan grafik garis
+            data: {
+                labels: {!! json_encode(array_keys($soalPerBulan->toArray())) !!}, 
+                datasets: [{
+                    label: 'Jumlah Soal',
+                    data: {!! json_encode(array_values($soalPerBulan->toArray())) !!},
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderWidth: 2,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: false,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 </div>
+
+
+
 @endsection

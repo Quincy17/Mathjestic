@@ -3,6 +3,17 @@
 @if(Auth::check() && Auth::user()->role === 'admin')
         @include('admin.sidebar')  
     @endif
+
+    <style>
+        .table {
+            border-radius: 10px; /* Sesuaikan radius untuk tingkat kelengkungan */
+            overflow: hidden; /* Agar sudut tetap melengkung meskipun ada border */
+        }   
+        .table th, .table td {
+            padding-left: 20px; /* Sesuaikan padding untuk kenyamanan */
+        }
+    </style>
+
 <div class="container">
     <h2>Activity Control</h2>
     <br>
@@ -26,5 +37,8 @@
             @endforeach
         </tbody>
     </table>
+    <div class="d-flex justify-content-center mt-3" style="float: right; margin-right: 20px;">
+        {{ $logs->links('pagination::bootstrap-5') }}
+    </div>
 </div>
 @endsection

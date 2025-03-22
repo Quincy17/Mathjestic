@@ -20,7 +20,7 @@ class SoalController extends Controller
                 ->orWhere('description', 'LIKE', "%$search%");
         }
 
-        $soals = $query->get();
+        $soals = $query->orderBy('created_at', 'desc')->paginate(10);
         return view('soal.index', compact('soals'));
     }
 
