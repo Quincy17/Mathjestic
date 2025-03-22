@@ -14,6 +14,7 @@
         <div class="col-md-4">
             <div class="card text-center shadow" style="height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                 <div class="card-body">
+                    <br><br>
                     <h5 class="card-title">Jumlah Modul</h5>
                     <h3>{{ $totalSoal }}</h3>
                     <a href="{{ route('soal.index') }}" class="btn btn-outline-primary">Lihat Detail</a>
@@ -23,6 +24,7 @@
         <div class="col-md-4">
             <div class="card text-center shadow" style="height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                 <div class="card-body">
+                    <br><br>
                     <h5 class="card-title">Jumlah Aktivitas</h5>
                     <h3>{{ $totalLogs }}</h3>
                     <a href="{{ route('admin.logs') }}" class="btn btn-outline-danger">Lihat Detail</a>

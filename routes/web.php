@@ -6,6 +6,7 @@ use App\Http\Controllers\SoalController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\BlogController;
 use App\Models\SoalModel;
 use Illuminate\Support\Facades\Auth;
 use App\Models\LogsModel;
@@ -30,6 +31,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/soal/download/{soal_id}', [SoalController::class, 'download'])->name('soal.download');
 
+    //Blog
+    Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
+    Route::get('/blogs/create', [BlogController::class, 'create'])->name('blogs.create');
+    Route::post('/blogs', [BlogController::class, 'store'])->name('blogs.store');
+    Route::get('/blogs/{blog}', [BlogController::class, 'show'])->name('blogs.show');
+    Route::get('/blogs/{blog}/edit', [BlogController::class, 'edit'])->name('blogs.edit');
+    Route::put('/blogs/{blog}', [BlogController::class, 'update'])->name('blogs.update');
+    Route::delete('/blogs/{blog}', [BlogController::class, 'destroy'])->name('blogs.destroy');
 }); 
 
 Route::get('/admin/logs', function () {
