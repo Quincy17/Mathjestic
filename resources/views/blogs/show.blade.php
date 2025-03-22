@@ -1,7 +1,9 @@
 @extends('layouts.app')
 @section('content')
     @if(Auth::check() && Auth::user()->role === 'admin')
-        @include('admin.sidebar')  
+        @include('admin.sidebar') 
+    @else
+        @include('admin.sidebar-user')
     @endif
     
 <div class="container">
