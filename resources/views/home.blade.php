@@ -48,7 +48,7 @@
                             @endif
 
                             <p>{{ Str::limit($blog->content, 100) }}</p>
-                            <a href="{{ route('blogs.show', $blog->id) }}" class="btn btn-primary">Baca Selengkapnya</a>
+                            <a href="{{ route('blogs.show', $blog->id) }}" class="btn btn-outline-primary">Baca Selengkapnya</a>
                         </div>
                     </div>
                 @endforeach

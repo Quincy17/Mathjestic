@@ -162,6 +162,11 @@
     </nav>
     </div>
     <script>
+        function hideSidebar() {
+            document.querySelector(".sidebar").classList.add("hidden");
+            document.querySelector(".content").classList.add("full");
+        }
+
         function toggleSidebar() {
             document.querySelector(".sidebar").classList.toggle("hidden");
             document.querySelector(".content").classList.toggle("full");
