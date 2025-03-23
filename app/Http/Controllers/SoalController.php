@@ -78,7 +78,7 @@ class SoalController extends Controller
             $existingLog = LogsModel::where('user_id', Auth::id())
                 ->where('activity', 'download_soal')
                 ->where('description', 'Siswa mengunduh soal: ' . $soal->title)
-                ->where('created_at', '>=', now()->subSeconds(3)) // Cek dalam 3 detik terakhir
+                ->where('created_at', '>=', now()->subSeconds(1)) // Cek dalam 3 detik terakhir
                 ->exists();
     
             if (!$existingLog) {

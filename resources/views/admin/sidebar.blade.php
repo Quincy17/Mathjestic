@@ -53,6 +53,7 @@
 
         .sidebar.hidden {
             margin-left: -250px; /* Sembunyikan sidebar */
+
         }
 
         .sidebar.hidden .toggle-btn {
@@ -105,9 +106,10 @@
 
     </style>
 </head>
-<body>
+<body onload="hideSidebar()">
     
     <!-- Sidebar -->
+    <div class="">
     <nav class="sidebar">
         <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
         <h4 class="text-dark">OlympiApp</h4>
@@ -157,9 +159,8 @@
                 </a>
             </li>
         </ul>
-        
     </nav>
-
+    </div>
     <script>
         function toggleSidebar() {
             document.querySelector(".sidebar").classList.toggle("hidden");

@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ProfileController;
 use App\Models\SoalModel;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +25,9 @@ Route::get('/soal', [SoalController::class, 'index'])->name('soal.index');
 // 🔒 Hanya bisa diakses setelah login
 Route::middleware(['auth'])->group(function () {
     // ✅ Gunakan Route::resource tanpa perlu manual menulis create/store
+    Route::get('/pages/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::get('/pages/edit-profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/pages/update-profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::middleware('admin')->group(function () {
         Route::resource('soal', SoalController::class)->except(['index', 'show']);
     });
