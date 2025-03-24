@@ -44,7 +44,7 @@
 
 
     <!-- Log Aktivitas -->
-    <div class="row mt-4">
+    <div class="row mt-4 pb-5">
         <div class="col">
             <div class="card shadow">
                 <div class="card-body">

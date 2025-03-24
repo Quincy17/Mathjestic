@@ -20,7 +20,7 @@
     </div>
 
     <!-- Daftar Blog -->
-    <div class="row justify-content-center">
+    <div class="row justify-content-center pb-5">
         <div class="col-md-7">
             @if($blogs->isEmpty())
                 <p class="text-muted">Belum ada artikel yang diposting.</p>

@@ -6,8 +6,22 @@
     @include('admin.sidebar')
 @endif
 <style>
-    body {
+    html, body {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
         font-family: 'Poppins', sans-serif;
+    }
+
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        min-height: 20vh;
+    }
+
+    .content {
+        flex: 1;
     }
 
     .hero-section {
@@ -58,6 +72,10 @@
         }
     }
 
+    .content {
+        flex: 1;
+    }
+
     .container .d-flex {
         overflow-x: auto;
         gap: 20px;
@@ -85,7 +103,7 @@
         </div>
     </div>
     <!-- Bagian Visi -->
-    <br><br>
+    <br>
     <div class="mt-4">
         <h2 class="fw-bold text-center">Visi</h2>
         <hr style="height: 3px; background-color: black; ">
@@ -155,6 +173,12 @@
     </div>--> 
 </div>
 
-@include('admin.footer')
+
+<div class="wrapper">
+    <main class="content">
+        @yield('content')
+    </main>
+    @include('admin.footer')
+</div>
 
 @endsection

@@ -42,6 +42,11 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top" id="navbar">
             <div class="container">
+                <a href="{{ route('home') }}">
+                    <img src="{{ asset('storage/home_files/logoo.png') }}" alt="logo.png" width="150" height="50">
+                </a>
+                    
+                </img>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -69,13 +74,10 @@
                             @endif
                         @else
                             <li class="nav-item">
-                                <a class="nav-link text-light" style="margin-right: 10px;" href="{{ route('blogs.index') }}">About</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-light" style="margin-right: 10px;" href="{{ route('blogs.index') }}">Matematika</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link text-light" style="margin-right: 10px;" href="{{ route('blogs.index') }}">Blogs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" style="margin-right: 10px;" href="{{ route('about.index') }}">About</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle text-light" href="#" role="button" 
@@ -102,8 +104,8 @@
                 </div>
             </div>
         </nav>
-
-        <main class="py-4" >
+        
+        <main class="pt-4" >
             @yield('content')
         </main>
     </div>

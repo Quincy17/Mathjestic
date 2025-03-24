@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AboutController;
 use App\Models\SoalModel;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,7 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/soal', [SoalController::class, 'index'])->name('soal.index');
-
+Route::get('/about', [AboutController::class, 'index'])->name('about.index');
 // 🔒 Hanya bisa diakses setelah login
 Route::middleware(['auth'])->group(function () {
     // ✅ Gunakan Route::resource tanpa perlu manual menulis create/store
