@@ -11,7 +11,8 @@ class BlogController extends Controller
 {
     public function index() {
         $blogs = BlogModel::latest()->paginate(5);
-        return view('blogs.index', compact('blogs'));
+        $mathBlogs = BlogModel::where('category', 'Matematika')->latest()->take(3)->get(); // Ambil 3 blog dengan kategori Matematika
+        return view('blogs.index', compact('blogs', 'mathBlogs'));
     }
 
     public function create() {
@@ -22,6 +23,7 @@ class BlogController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required',
+            'category' => 'required|string|max:255', // Validasi kategori
             'image' => 'nullable|image|max:4096'
         ]);
 
@@ -34,6 +36,7 @@ class BlogController extends Controller
             'user_id' => Auth::id(),
             'title' => $request->title,
             'content' => $request->content,
+            'category' => $request->category, // Simpan kategori
             'image' => $imagePath
         ]);
 
@@ -65,6 +68,7 @@ class BlogController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required',
+            'category' => 'required|string|max:255', // Validasi kategori
             'image' => 'nullable|image|max:4096'
         ]);
 
@@ -78,6 +82,7 @@ class BlogController extends Controller
         $blog->update([
             'title' => $request->title,
             'content' => $request->content,
+            'category' => $request->category, // Update kategori
             'image' => $blog->image
         ]);
 

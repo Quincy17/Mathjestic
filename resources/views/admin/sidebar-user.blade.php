@@ -69,8 +69,7 @@
 
         .content.full {
             margin-left: 0;
-        }
-        
+        }  
 
         .sidebar .nav-link {
             color: rgb(126, 126, 126) !important; /* Warna teks tetap hitam */
@@ -109,7 +108,7 @@
     
     <!-- Sidebar -->
     <nav class="sidebar">
-        <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+        <button class="toggle-btn" style="background-color: #4D55CC; color:#ffffff" onclick="toggleSidebar()">☰</button>
         <h4 class="text-dark">OlympiApp</h4>
         <ul class="nav flex-column">
             <li class="nav-item">

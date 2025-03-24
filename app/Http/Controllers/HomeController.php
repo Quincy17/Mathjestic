@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $blogs = BlogModel::latest()->take(5)->get(); // Ambil 5 blog terbaru
+        $blogs = BlogModel::latest()->take(3)->get(); // Ambil 3 blog terbaru
         return view('home', compact('blogs'));
     }
 }

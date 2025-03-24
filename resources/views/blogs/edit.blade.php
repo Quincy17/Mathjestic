@@ -14,7 +14,10 @@
             <label for="title" class="form-label">Judul Blog</label>
             <input type="text" name="title" id="title" class="form-control" value="{{ $blog->title }}" required>
         </div>
-
+        <div class="mb-3">
+            <label for="category" class="form-label">Kategori</label>
+            <input type="text" class="form-control" id="category" name="category" value="{{ old('category', $blog->category ?? '') }}" required>
+        </div>        
         <div class="mb-3">
             <label for="content" class="form-label">Konten</label>
             <textarea name="content" id="content" class="form-control" rows="5" required>{{ $blog->content }}</textarea>

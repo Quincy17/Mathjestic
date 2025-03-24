@@ -13,6 +13,10 @@
             <input type="text" class="form-control" id="title" name="title" required>
         </div>
         <div class="mb-3">
+            <label for="category" class="form-label">Kategori</label>
+            <input type="text" class="form-control" id="category" name="category" value="{{ old('category', $blog->category ?? '') }}" required>
+        </div>        
+        <div class="mb-3">
             <label for="content" class="form-label">Konten</label>
             <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
         </div>

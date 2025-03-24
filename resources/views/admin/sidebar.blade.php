@@ -92,7 +92,6 @@
         }
 
         .toggle-btn:hover {
-            
             transition: all 0.1s ease-in;
         }
 
@@ -111,8 +110,8 @@
     <!-- Sidebar -->
     <div class="">
     <nav class="sidebar">
-        <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
-        <h4 class="text-dark">OlympiApp</h4>
+        <button class="toggle-btn" style="background-color: #4D55CC; color:#ffffff" onclick="toggleSidebar()">☰</button>
+        <h4 class="text-dark">Mathjestic</h4>
         <ul class="nav flex-column">
             <li class="nav-item">
                 <a href="{{ route('home') }}" 
