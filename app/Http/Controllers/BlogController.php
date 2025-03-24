@@ -6,13 +6,30 @@ use Illuminate\Http\Request;
 use App\Models\BlogModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Parsedown;
+use ParsedownExtra;
+use Mews\Purifier\Facades\Purifier;
 
 class BlogController extends Controller
 {
     public function index() {
         $blogs = BlogModel::latest()->paginate(5);
         $mathBlogs = BlogModel::where('category', 'Matematika')->latest()->take(3)->get(); // Ambil 3 blog dengan kategori Matematika
-        return view('blogs.index', compact('blogs', 'mathBlogs'));
+
+        $parsedown = new ParsedownExtra();
+        foreach ($blogs as $blog) {
+            $html = $parsedown->text($blog->content);
+            
+            // Konfigurasi Purifier agar mengizinkan gambar
+            $config = \HTMLPurifier_Config::createDefault();
+            $config->set('HTML.Allowed', 'p,ul,ol,li,strong,em,u,s,blockquote,pre,code,table,tr,td,th,img,a');
+            $config->set('HTML.AllowedAttributes', 'img.src,img.alt,img.width,img.height,a.href,a.title');
+            $purifier = new \HTMLPurifier($config);
+
+            $blog->content = $purifier->purify($html);
+        }
+
+        return view('blogs.index', compact('blogs'));
     }
 
     public function create() {
@@ -45,10 +62,16 @@ class BlogController extends Controller
 
     public function show($id) {
         $blog = BlogModel::find($id);
+        $parsedown = new ParsedownExtra();
+        $html = $parsedown->text($blog->content);
 
-        if (!$blog) {
-            return redirect()->route('blogs.index')->with('error', 'Blog tidak ditemukan');
-        }
+        // Konfigurasi Purifier agar mengizinkan gambar
+        $config = \HTMLPurifier_Config::createDefault();
+        $config->set('HTML.Allowed', 'p,ul,ol,li,strong,em,u,s,blockquote,pre,code,table,tr,td,th,img,a');
+        $config->set('HTML.AllowedAttributes', 'img.src,img.alt,img.width,img.height,a.href,a.title');
+        $purifier = new \HTMLPurifier($config);
+
+        $blog->content = $purifier->purify($html);
 
         return view('blogs.show', compact('blog'));
     }

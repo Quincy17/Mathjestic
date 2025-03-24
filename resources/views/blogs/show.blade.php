@@ -13,7 +13,7 @@
                 <h2 style="word-wrap: break-word; overflow-wrap: break-word;">{{ $blog->title }}</h2>
                 <p class="text-muted">Ditulis oleh {{ $blog->user->name }} pada {{ $blog->created_at->format('d M Y') }}</p>
                 
-                <p style="word-wrap: break-word; overflow-wrap: break-word;">{{ $blog->content }}</p>
+                <div  class="markdown-body" style="word-wrap: break-word; overflow-wrap: break-word;">{!! $blog->content !!}</div>
 
                 @if ($blog->image)
                     <img src="{{ asset('storage/' . $blog->image) }}" alt="Blog Image" 
@@ -24,6 +24,13 @@
             <a href="{{ route('blogs.index') }}" class="btn btn-outline-primary">Kembali</a>
         </div>
     </div>
-    
 </div>
+
+<!-- Render MathJax setelah halaman dimuat -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        MathJax.typeset();
+    });
+</script>
+
 @endsection

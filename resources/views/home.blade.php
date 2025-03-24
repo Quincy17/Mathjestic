@@ -84,7 +84,39 @@
 
     .container .card {
         flex: 0 0 auto;
+        width: 18rem;
+        height: 350px; /* Tetapkan tinggi kartu */
+        border-radius: 15px;
+        overflow: hidden;
     }
+
+    .container .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+    .container .card-body h5 {
+        font-size: 18px;
+        font-weight: bold;
+        min-height: 50px; /* Pastikan judul memiliki ruang tetap */
+    }
+
+    .container .card-body p {
+        font-size: 14px;
+        flex-grow: 1; /* Isi teks memenuhi ruang yang tersedia */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .container .card img {
+        width: 100%;
+        height: 150px; /* Tetapkan tinggi gambar */
+        object-fit: cover; /* Pastikan gambar tidak terdistorsi */
+    }
+
 
 </style>
 
@@ -122,7 +154,7 @@
             @else
                 @foreach($blogs->take(3) as $blog)
                     <a href="{{ route('blogs.show', $blog->id) }}" class="text-decoration-none text-dark ">
-                        <div class="card shadow-sm" style="width: 18rem; border-radius: 15px; overflow: hidden;">
+                        <div class="card shadow-sm" >
                             @if ($blog->image)
                                 <img src="{{ asset('storage/' . $blog->image) }}" alt="Blog Image" class="img-fluid" style="height: 150px; object-fit: cover;">
                             @else
@@ -133,7 +165,7 @@
                             <div class="card-body">
                                 <h5 class="fw-bold">{{ $blog->title }}</h5>
                                 <p class="text-muted small">Ditulis oleh {{ $blog->user->name }} pada {{ $blog->created_at->format('d M Y') }}</p>
-                                <p class="mb-0">{{ Str::limit($blog->content, 100) }}</p>
+                                <div class="mb-0 markdown-body">{!! Str::limit($blog->content, 100) !!}</div>
                             </div>
                         </div>
                     </a>

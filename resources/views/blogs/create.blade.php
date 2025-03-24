@@ -17,8 +17,8 @@
             <input type="text" class="form-control" id="category" name="category" value="{{ old('category', $blog->category ?? '') }}" required>
         </div>        
         <div class="mb-3">
-            <label for="content" class="form-label">Konten</label>
-            <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
+            <label for="content">Konten:</label>
+            <textarea name="content" id="content" class="form-control" rows="20" required placeholder="Gunakan $$ ... $$ untuk persamaan blok dan $ ... $ untuk persamaan inline"></textarea>
         </div>
         <div class="mb-3">
             <label for="image" class="form-label">Gambar (Opsional)</label>
@@ -27,4 +27,5 @@
         <button type="submit" class="btn btn-outline-primary">Posting</button>
     </form>
 </div>
+
 @endsection

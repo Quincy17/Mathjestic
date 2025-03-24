@@ -7,7 +7,6 @@
     @endif
 
 <div class="container">
-    <!-- Bagian Header -->
     <div class="row justify-content-center">
         <div class="col-md-7">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -19,7 +18,6 @@
         </div>
     </div>
 
-    <!-- Daftar Blog -->
     <div class="row justify-content-center pb-5">
         <div class="col-md-7">
             @if($blogs->isEmpty())
@@ -35,7 +33,7 @@
                                 <img src="{{ asset('storage/' . $blog->image) }}" alt="Blog Image" class="img-fluid mb-3">
                             @endif
 
-                            <p>{{ Str::limit($blog->content, 100) }}</p>
+                            <div  class="markdown-body" >{!! Str::limit($blog->content, 200) !!}</div>
                             <a href="{{ route('blogs.show', $blog->id) }}" class="btn btn-outline-primary">Baca Selengkapnya</a>
 
                             @if(Auth::id() === $blog->user_id)
@@ -51,7 +49,7 @@
                 @endforeach
             @endif
         </div>
-        <!-- Pagination -->
+
         <div class="row justify-content-center">
             <div class="col-md-7">
                 <div class="d-flex justify-content-end me-3 mt-3">
@@ -60,7 +58,13 @@
             </div>
         </div>
     </div>
-
-    
 </div>
+
+<!-- Render MathJax setelah halaman dimuat -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        MathJax.typeset();
+    });
+</script>
+
 @endsection
