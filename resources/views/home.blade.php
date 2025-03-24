@@ -154,4 +154,7 @@
         </div>
     </div>--> 
 </div>
+
+@include('admin.footer')
+
 @endsection

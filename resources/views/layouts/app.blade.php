@@ -19,10 +19,9 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
     <style>
-        body{
-            padding: 70px;
+        body {
+            padding-top: 70px;
         }
-
         h2, #judul {
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
