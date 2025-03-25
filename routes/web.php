@@ -48,6 +48,17 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/blogs/{blog}', [BlogController::class, 'destroy'])->name('blogs.destroy');
 
     Route::resource('latihan_soal', LatihanSoalController::class);
+    Route::get('/latihan-soal', [LatihanSoalController::class, 'index'])->name('latihan-soal.index');
+    Route::get('/latihan-soal/create', [LatihanSoalController::class, 'create'])->name('latihan-soal.create');
+    Route::post('/latihan-soal', [LatihanSoalController::class, 'store'])->name('latihan-soal.store');
+    Route::get('/latihan-soal/{id}', [LatihanSoalController::class, 'show'])->name('latihan-soal.show');
+    Route::get('/latihan-soal/{id}/edit', [LatihanSoalController::class, 'edit'])->name('latihan-soal.edit');
+    Route::put('/latihan-soal/{id}', [LatihanSoalController::class, 'update'])->name('latihan-soal.update');
+    Route::delete('/latihan-soal/{id}', [LatihanSoalController::class, 'destroy'])->name('latihan-soal.destroy');
+    Route::get('/latihan-soal/{id}/kerjakan', [LatihanSoalController::class, 'kerjakan'])->name('latihan_soal.kerjakan');
+    Route::post('/latihan-soal/{id}/submit', [LatihanSoalController::class, 'submitJawaban'])->name('latihan_soal.submit');
+
+
 }); 
 
 Route::get('/admin/logs', function () {

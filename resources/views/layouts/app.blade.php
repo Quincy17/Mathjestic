@@ -126,7 +126,7 @@
                             @endif
                         @else
                             <li class="nav-item">
-                                <a class="nav-link text-light" style="margin-right: 10px; margin-left:10px;" href="{{ route('blogs.index') }}">Soal</a>
+                                <a class="nav-link text-light" style="margin-right: 10px; margin-left:10px;" href="{{ route('latihan-soal.index') }}">Soal</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-light" style="margin-right: 10px; margin-left:10px;" href="{{ route('blogs.index') }}">Blogs</a>
