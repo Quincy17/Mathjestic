@@ -21,6 +21,7 @@
             z-index: 1051; /* ✅ Lebih tinggi dari navbar */
             transition: all 0.3s ease;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Efek bayangan */
+            margin-left: -250px; /* Langsung tersembunyi tanpa animasi */
         }
 
         .sidebar .nav-link {
@@ -34,10 +35,25 @@
             vertical-align: middle; /* Posisi sejajar */
         }
 
-        body{
-            background-color: #f3f3f3;
+        body {
+            position: relative;
+            background: none; /* Hapus background langsung dari body */
+            color: white;
+            margin: 0;
         }
 
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("{{ asset('storage/home_files/background.jpg') }}") no-repeat center center/cover;
+            filter: blur(5px); /* Efek blur */
+            z-index: -1; /* Agar tidak menutupi konten */
+        }
+        
         .toggle-btn {
             position: absolute;
             border-radius: 70%;
@@ -49,6 +65,10 @@
             padding: 8px 12px;
             cursor: pointer;
             transition: right 0.3s ease;
+        }
+
+        .sidebar.show {
+            margin-left: 0; /* Ditampilkan */
         }
 
         .sidebar.hidden {
@@ -161,16 +181,27 @@
     </nav>
     </div>
     <script>
-        function hideSidebar() {
-            document.querySelector(".sidebar").classList.add("hidden");
-            document.querySelector(".content").classList.add("full");
-        }
-
+        document.addEventListener("DOMContentLoaded", function() {
+            const sidebar = document.querySelector(".sidebar");
+    
+            // Tambahkan class hidden saat pertama kali dimuat tanpa animasi
+            sidebar.classList.add("hidden");
+            setTimeout(() => {
+                sidebar.style.transition = "margin-left 0.3s ease"; // Aktifkan transisi setelah halaman dimuat
+            }, 10);
+        });
+    
         function toggleSidebar() {
-            document.querySelector(".sidebar").classList.toggle("hidden");
-            document.querySelector(".content").classList.toggle("full");
-            document.querySelector(".toggle-btn").classList.toggle("hidden");
+            const sidebar = document.querySelector(".sidebar");
+            if (sidebar.classList.contains("hidden")) {
+                sidebar.classList.remove("hidden");
+                sidebar.classList.add("show");
+            } else {
+                sidebar.classList.remove("show");
+                sidebar.classList.add("hidden");
+            }
         }
-    </script>
+    </script>    
+    
 </body>
 </html>

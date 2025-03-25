@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use App\Models\LogsModel;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\LatihanSoalController;
 
 // ✅ Bisa diakses tanpa login
 Route::get('/home', [HomeController::class, 'index']);
@@ -23,14 +24,14 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/soal', [SoalController::class, 'index'])->name('soal.index');
 Route::get('/about', [AboutController::class, 'index'])->name('about.index');
+
 // 🔒 Hanya bisa diakses setelah login
 Route::middleware(['auth'])->group(function () {
-    // ✅ Gunakan Route::resource tanpa perlu manual menulis create/store
     Route::get('/pages/profile', [ProfileController::class, 'index'])->name('profile');
     Route::get('/pages/edit-profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/pages/update-profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::middleware('admin')->group(function () {
-        Route::resource('soal', SoalController::class)->except(['index', 'show']);
+    Route::resource('soal', SoalController::class)->except(['index', 'show']);
     });
 
     Route::get('/admin', [AdminController::class, 'index']);
@@ -45,6 +46,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/blogs/{blog}/edit', [BlogController::class, 'edit'])->name('blogs.edit');
     Route::put('/blogs/{blog}', [BlogController::class, 'update'])->name('blogs.update');
     Route::delete('/blogs/{blog}', [BlogController::class, 'destroy'])->name('blogs.destroy');
+
+    Route::resource('latihan_soal', LatihanSoalController::class);
 }); 
 
 Route::get('/admin/logs', function () {

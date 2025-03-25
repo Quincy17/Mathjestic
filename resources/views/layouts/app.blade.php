@@ -41,27 +41,60 @@
         body {
             padding-top: 70px;
         }
+
         h2, #judul {
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
         }
         
-        #navbar{
-            background-color: #4D55CC !important;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3) !important;
+        #navbar {
+            margin-top: 10px;
+            background-color: transparent !important; /* Buat transparan */
+            box-shadow: none !important; /* Hapus bayangan */
         }
 
         .nav-item:hover{
             background-color: #3E42B5;
             border-radius: 10%;
         }
+        .thumbnail-a:hover {
+            background-color: #3E42B5;
+            border-radius: 10%;
+        }
+
+        .nav-item {
+            position: relative;
+            z-index: 2; /* Pastikan di atas efek blur */
+            margin-right: 20px;
+        }
+
+        .nav-item::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(3px);
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .nav-item.blur-active::after {
+            opacity: 1;
+        }
+
+
     </style>
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top" id="navbar">
             <div class="container">
-                <a href="{{ route('home') }}">
+                <a href="{{ route('home') }}" class="nav-item">
                     <img src="{{ asset('storage/home_files/logoo.png') }}" alt="logo.png" width="150" height="50">
                 </a>
                     
@@ -93,13 +126,16 @@
                             @endif
                         @else
                             <li class="nav-item">
-                                <a class="nav-link text-light" style="margin-right: 10px;" href="{{ route('blogs.index') }}">Blogs</a>
+                                <a class="nav-link text-light" style="margin-right: 10px; margin-left:10px;" href="{{ route('blogs.index') }}">Soal</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light" style="margin-right: 10px;" href="{{ route('about.index') }}">About</a>
+                                <a class="nav-link text-light" style="margin-right: 10px; margin-left:10px;" href="{{ route('blogs.index') }}">Blogs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" style="margin-right: 10px;  margin-left:10px;" href="{{ route('about.index') }}">About</a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-light" href="#" role="button" 
+                                <a id="navbarDropdown" style=" margin-left:10px;" class="nav-link dropdown-toggle text-light" href="#" role="button" 
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                     {{ Auth::user()->name }}
                                 </a>
@@ -130,4 +166,33 @@
     </div>
     
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const navItems = document.querySelectorAll(".nav-item");
+
+    function checkBlurEffect() {
+        navItems.forEach(item => {
+            const rect = item.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.bottom + 5; // Cek sedikit di bawah item
+            
+            // Cek elemen yang berada tepat di belakang nav-item
+            const elementBehind = document.elementFromPoint(centerX, centerY);
+
+            // Jika elemen bukan body atau html (background kosong), aktifkan blur
+            if (elementBehind && !['BODY', 'HTML'].includes(elementBehind.tagName)) {
+                item.classList.add("blur-active");
+            } else {
+                item.classList.remove("blur-active");
+            }
+        });
+    }
+
+    window.addEventListener("scroll", checkBlurEffect);
+    window.addEventListener("resize", checkBlurEffect);
+    checkBlurEffect(); // Jalankan saat halaman dimuat
+});
+
+    </script>
+    
 </html>

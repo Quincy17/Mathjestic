@@ -63,6 +63,8 @@
 </style>
 @section('content')
     <div class="container">
+        <br><br>
+        <h1 style="font-family: 'Poppins', sans-serif;">Tentang Saya</h1>
         <div class="hero-section">
             <!-- Bagian Kiri -->
             <div class="fade-in">

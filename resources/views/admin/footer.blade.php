@@ -1,26 +1,26 @@
     <style>
         
         .footer {
-    background: #4D55CC;
-    color: white;
-    text-align: center;
-    padding: 15px 0;
-    margin-top: auto; /* Mencegah margin manual */
-    box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.3); /* Bayangan hanya di atas */
-}
+            background: #4D55CC;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: auto; /* Mencegah margin manual */
+            box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.3); /* Bayangan hanya di atas */
+        }
 
-/* Responsif */
-.footer a {
-    color: white;
-    margin: 0 10px;
-    font-size: 14px;
-    transition: 0.3s;
-    text-decoration: none;
-}
+        /* Responsif */
+        .footer a {
+            color: white;
+            margin: 0 10px;
+            font-size: 14px;
+            transition: 0.3s;
+            text-decoration: none;
+        }
 
-.footer a:hover {
-    color: #ffcc00;
-}
+        .footer a:hover {
+            color: #ffcc00;
+        }
     </style>    
     
 <div class="footer">

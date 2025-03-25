@@ -34,8 +34,23 @@
             vertical-align: middle; /* Posisi sejajar */
         }
 
-        body{
-            background-color: #f3f3f3;
+        body {
+            position: relative;
+            background: none; /* Hapus background langsung dari body */
+            color: white;
+            margin: 0;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("{{ asset('storage/home_files/background.jpg') }}") no-repeat center center/cover;
+            filter: blur(5px); /* Efek blur */
+            z-index: -1; /* Agar tidak menutupi konten */
         }
 
         .toggle-btn {
@@ -51,8 +66,13 @@
             transition: right 0.3s ease;
         }
 
+        .sidebar.show {
+            margin-left: 0; /* Ditampilkan */
+        }
+
         .sidebar.hidden {
             margin-left: -250px; /* Sembunyikan sidebar */
+
         }
 
         .sidebar.hidden .toggle-btn {
@@ -109,11 +129,11 @@
     <!-- Sidebar -->
     <nav class="sidebar">
         <button class="toggle-btn" style="background-color: #4D55CC; color:#ffffff" onclick="toggleSidebar()">☰</button>
-        <h4 class="text-dark">OlympiApp</h4>
+        <h4 class="text-dark">Mathjestic</h4>
         <ul class="nav flex-column">
-            <li class="nav-item">
+            <li class="nav-item" style="margin-top: 10px;">
                 <a href="{{ route('home') }}" 
-                   class="nav-link text-dark {{ request()->routeIs('home') ? 'active' : '' }}" style="margin-bottom: 5px; margin-top: 10px;">
+                   class="nav-link text-dark {{ request()->routeIs('home') ? 'active' : '' }}" style="margin-bottom: 5px;">
                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-home"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
                    Home
                 </a>
