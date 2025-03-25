@@ -35,23 +35,10 @@
             vertical-align: middle; /* Posisi sejajar */
         }
 
-        body {
-            position: relative;
-            background: none; /* Hapus background langsung dari body */
-            color: white;
-            margin: 0;
-        }
-
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url("{{ asset('storage/home_files/background.jpg') }}") no-repeat center center/cover;
-            filter: blur(5px); /* Efek blur */
-            z-index: -1; /* Agar tidak menutupi konten */
+        #app {
+            background: linear-gradient(135deg, #9fa3dd, #ffffff);
+            color: black;
+            font-style: 'Poppins', sans-serif;
         }
         
         .toggle-btn {
@@ -168,6 +155,13 @@
                    class="nav-link text-dark {{ request()->routeIs('soal.create') ? 'active' : '' }}" style="margin-bottom: 5px;">
                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-upload"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 9l5 -5l5 5" /><path d="M12 4l0 12" /></svg>
                    Upload Modul
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('arsip.jawaban') }}" 
+                   class="nav-link text-dark {{ request()->routeIs('arsip.jawaban') ? 'active' : '' }}" style="margin-bottom: 5px;">
+                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-archive"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /><path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" /><path d="M10 12l4 0" /></svg>
+                   Arsip Jawaban
                 </a>
             </li>
             <li class="nav-item">

@@ -39,7 +39,7 @@
 
     <style>
         body {
-            padding-top: 70px;
+            padding-top: 60px;
         }
 
         h2, #judul {
@@ -48,9 +48,8 @@
         }
         
         #navbar {
-            margin-top: 10px;
-            background-color: transparent !important; /* Buat transparan */
-            box-shadow: none !important; /* Hapus bayangan */
+            background-color: #4D55CC !important;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5) !important; 
         }
 
         .nav-item:hover{
@@ -62,31 +61,6 @@
             border-radius: 10%;
         }
 
-        .nav-item {
-            position: relative;
-            z-index: 2; /* Pastikan di atas efek blur */
-            margin-right: 20px;
-        }
-
-        .nav-item::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            backdrop-filter: blur(3px);
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
-
-        .nav-item.blur-active::after {
-            opacity: 1;
-        }
-
 
     </style>
 </head>
@@ -94,7 +68,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top" id="navbar">
             <div class="container">
-                <a href="{{ route('home') }}" class="nav-item">
+                <a href="{{ route('home') }}" class="thumbnail-a">
                     <img src="{{ asset('storage/home_files/logoo.png') }}" alt="logo.png" width="150" height="50">
                 </a>
                     
@@ -166,33 +140,5 @@
     </div>
     
 </body>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-    const navItems = document.querySelectorAll(".nav-item");
-
-    function checkBlurEffect() {
-        navItems.forEach(item => {
-            const rect = item.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.bottom + 5; // Cek sedikit di bawah item
-            
-            // Cek elemen yang berada tepat di belakang nav-item
-            const elementBehind = document.elementFromPoint(centerX, centerY);
-
-            // Jika elemen bukan body atau html (background kosong), aktifkan blur
-            if (elementBehind && !['BODY', 'HTML'].includes(elementBehind.tagName)) {
-                item.classList.add("blur-active");
-            } else {
-                item.classList.remove("blur-active");
-            }
-        });
-    }
-
-    window.addEventListener("scroll", checkBlurEffect);
-    window.addEventListener("resize", checkBlurEffect);
-    checkBlurEffect(); // Jalankan saat halaman dimuat
-});
-
-    </script>
     
 </html>

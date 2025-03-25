@@ -7,6 +7,7 @@
     @endif
 
 <div class="container">
+    <br><br>
     <div class="row justify-content-center">
         <div class="col-md-7">
             <div class="d-flex justify-content-between align-items-center mb-3">

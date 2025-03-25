@@ -62,7 +62,7 @@
     }
 </style>
 @section('content')
-    <div class="container">
+    <div class="container" style="color: black; font-family: 'Poppins', sans-serif;">
         <br><br>
         <h1 style="font-family: 'Poppins', sans-serif;">Tentang Saya</h1>
         <div class="hero-section">

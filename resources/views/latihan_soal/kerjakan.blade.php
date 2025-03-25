@@ -29,10 +29,10 @@
                 <div class="mb-3">
                     <textarea name="jawaban" class="form-control" rows="5" required></textarea>
                 </div>
-                <button type="submit" class="btn btn-success">Kirim Jawaban</button>
+                <button type="submit" class="btn btn-success" style="float: right;">Kirim Jawaban</button>
             </form>
 
-            <a href="{{ route('latihan_soal.index') }}" class="btn btn-outline-primary mt-3">Kembali</a>
+            <a href="{{ route('latihan_soal.index') }}" class="btn btn-primary mt-3">Kembali</a>
         </div>
     </div>
 </div>

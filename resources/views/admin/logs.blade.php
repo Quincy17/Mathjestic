@@ -15,6 +15,7 @@
     </style>
 
 <div class="container pb-5">
+    <br><br>
     <h2>Activity Control</h2>
     <br>
     <table class="table shadow">

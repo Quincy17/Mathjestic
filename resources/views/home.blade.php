@@ -146,7 +146,7 @@
     <div class="mt-4">
         <h2 class="fw-bold text-center">Visi</h2>
         <hr style="height: 3px; background-color: black; ">
-        <p class="text-center text-light" style="font-size: 18px; color: #000000;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita iure labore officiis dolore dicta numquam provident, voluptatibus debitis quasi. Porro laborum delectus eveniet autem accusamus odit dicta, fugiat unde nam.
+        <p class="text-center text-dark" style="font-size: 18px; color: #000000;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita iure labore officiis dolore dicta numquam provident, voluptatibus debitis quasi. Porro laborum delectus eveniet autem accusamus odit dicta, fugiat unde nam.
         Minus excepturi a in, atque, harum provident alias, distinctio ducimus iure quam numquam tempore! Laboriosam incidunt harum, a voluptatum cumque recusandae omnis soluta rem dignissimos sunt earum pariatur, quod hic.
         Voluptatem praesentium repellendus eum, odio magni cum nihil quia incidunt quibusdam quam et assumenda reprehenderit officia neque, alias porro optio laboriosam harum dolore? Voluptatum obcaecati dignissimos culpa et quae natus?</p>
     </div>
@@ -163,7 +163,7 @@
             @else
                 @foreach($blogs->take(3) as $blog)
                     <a href="{{ route('blogs.show', $blog->id) }}" class="text-decoration-none text-dark ">
-                        <div class="card shadow-sm" >
+                        <div class="card shadow -sm" >
                             @if ($blog->image)
                                 <img src="{{ asset('storage/' . $blog->image) }}" alt="Blog Image" class="img-fluid" style="height: 150px; object-fit: cover;">
                             @else

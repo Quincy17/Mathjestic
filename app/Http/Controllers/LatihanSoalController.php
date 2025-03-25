@@ -9,9 +9,15 @@ use ParsedownExtra;
 
 class LatihanSoalController extends Controller
 {
-    public function index() {
-        $latihanSoal = LatihanSoalModel::all();
-        return view('latihan_soal.index', compact('latihanSoal'));
+    public function index(Request $request) {
+        $search = $request->input('search');
+    
+        $latihanSoal = LatihanSoalModel::when($search, function ($query) use ($search) {
+            return $query->where('judul', 'like', "%{$search}%")
+                         ->orWhere('soal', 'like', "%{$search}%");
+        })->paginate(10); // Pakai pagination biar lebih rapi
+
+        return view('latihan_soal.index', compact('latihanSoal', 'search'));
     }
     
     public function create() {
@@ -52,10 +58,16 @@ class LatihanSoalController extends Controller
     
     public function show($id)
     {
-        $latihanSoal = LatihanSoalModel::findOrFail($id); // Ambil soal berdasarkan ID
-
-        return view('latihan_soal.show', compact('latihanSoal'));
+        $latihanSoal = LatihanSoalModel::findOrFail($id);
+    
+        return view('latihan-soal.show', [
+            'latihanSoal' => $latihanSoal,
+            'deskripsi' => Str::markdown($latihanSoal->deskripsi),
+            'soal' => Str::markdown($latihanSoal->soal),
+            'jawaban' => Str::markdown($latihanSoal->jawaban)
+        ]);
     }
+    
 
 
     public function destroy(LatihanSoalModel $latihan_soal) {

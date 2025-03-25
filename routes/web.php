@@ -61,7 +61,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/latihan-soal/{id}/submit', [LatihanSoalController::class, 'submitJawaban'])
     ->name('latihan_soal.submit')
     ->middleware('auth');
-
+    Route::get('/latihan-soal/{id}/submit', function ($id) {
+        return view('latihan_soal.submit', ['latihanSoalId' => $id]);
+    })->name('latihan_soal.submit');
     Route::post('/latihan-soal/{latihanSoal}/jawaban', [JawabanMuridController::class, 'store'])->name('jawaban_murid.store');
 
 }); 
@@ -75,6 +77,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/logs', [AdminController::class, 'logs'])->name('admin.logs');
     Route::get('/admin/data-website', [AdminController::class, 'dataWebsite'])->name('admin.dataWebsite');
+    Route::get('/admin/arsip-jawaban', [JawabanMuridController::class, 'arsipJawaban'])->name('arsip.jawaban');
 });
 
 

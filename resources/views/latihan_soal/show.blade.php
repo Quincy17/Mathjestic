@@ -24,6 +24,13 @@
                 </div>
             </div>
 
+            <div class="card mb-3 shadow-sm p-3">
+                <p><strong>Jawaban:</strong></p>
+                <div class="border p-3" id="mathjax-content">
+                    {!! Str::markdown($latihanSoal->jawaban) !!}
+                </div>
+            </div>
+
             <a href="{{ route('latihan_soal.index') }}" class="btn btn-outline-primary">Kembali</a>
         </div>
     </div>

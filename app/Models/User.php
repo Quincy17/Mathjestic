@@ -54,4 +54,9 @@ class User extends Authenticatable
         return $this->hasMany(JawabanMuridModel::class);
     }
     
+    // Scope untuk mengambil user dengan role murid
+    public function scopeMurid($query)
+    {
+        return $query->where('role', 'murid');
+    }
 }
