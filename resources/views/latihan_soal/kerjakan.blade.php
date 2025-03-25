@@ -3,33 +3,43 @@
 @section('content')
 @if(Auth::check() && Auth::user()->role === 'murid')
     @include('admin.sidebar-user') 
+@else
+    @include('admin.sidebar')
 @endif
 
 <div class="container">
-    <h2>Kerjakan Soal</h2>
-    <div class="card mt-3">
-        <div class="card-body">
-            <h4>{{ $latihanSoal->judul }}</h4>
-            <p>{!! $parsedown->text($latihanSoal->soal) !!}</p> {{-- Markdown Support --}}
+    <div class="row justify-content-center">
+        <div class="col-md-9">
+            <h2>{{ $latihanSoal->judul }}</h2>
+
+            <div class="card p-3 shadow-sm mb-3">
+                <p><strong>Deskripsi:</strong> {!! Str::markdown($latihanSoal->deskripsi) !!}</p>
+            </div>
+
+            <div class="card p-3 shadow-sm mb-3">
+                <p><strong>Soal:</strong></p>
+                <div class="border p-3">
+                    {!! Str::markdown($latihanSoal->soal) !!}
+                </div>
+            </div>
+
+            <h4>Jawaban Anda:</h4>
+            <form action="{{ route('jawaban_murid.store', $latihanSoal->id) }}" method="POST">
+                @csrf
+                <div class="mb-3">
+                    <textarea name="jawaban" class="form-control" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-success">Kirim Jawaban</button>
+            </form>
+
+            <a href="{{ route('latihan_soal.index') }}" class="btn btn-outline-primary mt-3">Kembali</a>
         </div>
     </div>
-
-    <form action="{{ route('latihan_soal.submit', $latihanSoal->id) }}" method="POST">
-        @csrf
-        <div class="form-group mt-3">
-            <label for="jawaban">Jawaban Anda:</label>
-            <textarea name="jawaban" class="form-control" rows="4" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-outline-primary mt-4">Kirim Jawaban</button>
-    </form>
 </div>
 
-{{-- MathJax untuk soal matematika --}}
 <script>
-    window.onload = function () {
-        if (window.MathJax) {
-            MathJax.typeset();
-        }
-    };
+    MathJax = { tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}, svg: {fontCache: 'global'} };
 </script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 @endsection

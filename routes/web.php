@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\LogsModel;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\LatihanSoalController;
+use App\Http\Controllers\JawabanMuridController;
 
 // ✅ Bisa diakses tanpa login
 Route::get('/home', [HomeController::class, 'index']);
@@ -57,7 +58,11 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/latihan-soal/{id}', [LatihanSoalController::class, 'destroy'])->name('latihan-soal.destroy');
     Route::get('/latihan-soal/{id}/kerjakan', [LatihanSoalController::class, 'kerjakan'])->name('latihan_soal.kerjakan');
     Route::post('/latihan-soal/{id}/submit', [LatihanSoalController::class, 'submitJawaban'])->name('latihan_soal.submit');
+    Route::post('/latihan-soal/{id}/submit', [LatihanSoalController::class, 'submitJawaban'])
+    ->name('latihan_soal.submit')
+    ->middleware('auth');
 
+    Route::post('/latihan-soal/{latihanSoal}/jawaban', [JawabanMuridController::class, 'store'])->name('jawaban_murid.store');
 
 }); 
 

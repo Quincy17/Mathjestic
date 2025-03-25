@@ -29,20 +29,26 @@ class LatihanSoalController extends Controller
         return redirect()->route('latihan_soal.index')->with('success', 'Soal berhasil ditambahkan!');
     }
     
-    public function edit(LatihanSoalModel $latihan_soal) {
-        return view('latihan_soal.edit', compact('latihan_soal'));
+    public function edit($id) {
+        $latihanSoal = LatihanSoalModel::findOrFail($id);
+        return view('latihan_soal.edit', compact('latihanSoal'));
     }
     
-    public function update(Request $request, LatihanSoalModel $latihan_soal) {
+    
+    public function update(Request $request, $id) {
         $request->validate([
             'judul' => 'required',
             'deskripsi' => 'required|string',
             'soal' => 'required',
             'jawaban' => 'required',
         ]);
-        $latihan_soal->update($request->all());
-        return redirect()->route('latihan_soal.index')->with('success', 'Soal berhasil diperbarui!');
+    
+        $latihanSoal = LatihanSoalModel::findOrFail($id);
+        $latihanSoal->update($request->all());
+    
+        return redirect()->route('latihan-soal.index')->with('success', 'Soal berhasil diperbarui!');
     }
+    
     
     public function show($id)
     {
@@ -64,17 +70,19 @@ class LatihanSoalController extends Controller
         return view('latihan_soal.kerjakan', compact('latihanSoal', 'parsedown'));
     }
 
+
     public function submitJawaban(Request $request, $id)
     {
         $request->validate([
-            'jawaban' => 'required|string',
+            'jawaban_murid' => 'required|string',
         ]);
 
-        $soal = LatihanSoalModel::findOrFail($id);
+        $latihanSoal = LatihanSoalModel::findOrFail($id);
+        $latihanSoal->jawaban_murid = $request->jawaban_murid;
+        $latihanSoal->save();
 
-        // Simpan jawaban murid jika diperlukan (bisa ke database)
-
-        return view('latihan_soal.submit');
+        return redirect()->route('latihan_soal.index')->with('success', 'Jawaban berhasil dikirim!');
     }
+
 
 }
