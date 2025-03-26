@@ -10,13 +10,14 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-9">
+            <br><br>
             <h2>{{ $latihanSoal->judul }}</h2>
 
-            <div class="card p-3 shadow-sm mb-3">
+            <div class="card p-3 shadow -sm mb-3">
                 <p><strong>Deskripsi:</strong> {!! Str::markdown($latihanSoal->deskripsi) !!}</p>
             </div>
 
-            <div class="card p-3 shadow-sm mb-3">
+            <div class="card p-3 shadow -sm mb-3">
                 <p><strong>Soal:</strong></p>
                 <div class="border p-3">
                     {!! Str::markdown($latihanSoal->soal) !!}
@@ -24,14 +25,15 @@
             </div>
 
             <h4>Jawaban Anda:</h4>
-            <form action="{{ route('jawaban_murid.store', $latihanSoal->id) }}" method="POST">
-                @csrf
-                <div class="mb-3">
-                    <textarea name="jawaban" class="form-control" rows="5" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-success" style="float: right;">Kirim Jawaban</button>
-            </form>
-
+            <div class="shadow">
+                <form action="{{ route('jawaban_murid.store', $latihanSoal->id) }}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <textarea name="jawaban" class="form-control" rows="15" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success mt-3" style="float: right;">Kirim Jawaban</button>
+                </form>
+            </div>
             <a href="{{ route('latihan_soal.index') }}" class="btn btn-primary mt-3">Kembali</a>
         </div>
     </div>

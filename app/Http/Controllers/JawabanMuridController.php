@@ -9,6 +9,22 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class JawabanMuridController extends Controller {
+    public function index(Request $request)
+    {
+        $search = $request->input('search');
+    
+        $jawabanMurid = JawabanMuridModel::with(['murid', 'latihanSoal'])
+            ->when($search, function ($query) use ($search) {
+                return $query->whereHas('murid', function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%");
+                })->orWhereHas('latihanSoal', function ($q) use ($search) {
+                    $q->where('judul', 'like', "%{$search}%");
+                })->orWhere('jawaban', 'like', "%{$search}%");
+            })
+            ->orderBy('created_at', 'desc')->paginate(10);
+    
+        return view('admin.arsip-jawaban', compact('jawabanMurid', 'search'));
+    }
     public function store(Request $request, $latihanSoalId)
     {
         $request->validate([
@@ -60,5 +76,9 @@ class JawabanMuridController extends Controller {
         return view('admin.arsip-jawaban', compact('jawabanMurid'));
     }
 
-
+    public function show($id)
+    {
+        $jawaban = JawabanMuridModel::findOrFail($id);
+        return view('latihan_soal.show-jawaban', compact('jawaban'));
+    }
 }

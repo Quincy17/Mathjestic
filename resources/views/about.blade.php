@@ -7,19 +7,33 @@
 @endif
 <style>
     .hero-section {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 60px;
-    flex-wrap: wrap; /* Memastikan elemen turun jika ruang tidak cukup */
-}
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 60px;
+        flex-wrap: wrap; /* Memastikan elemen turun jika ruang tidak cukup */
+    }
 
-.hero-section div {
-    flex: 1; /* Membagi ruang agar seimbang */
-    min-width: 300px; /* Membatasi ukuran minimum agar tidak terlalu kecil */
-    max-width: 600px; /* Membatasi agar tidak terlalu lebar */
-}
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        min-height: 20vh;
+    }
+    
+    .hero-section div {
+        flex: 1; /* Membagi ruang agar seimbang */
+        min-width: 300px; /* Membatasi ukuran minimum agar tidak terlalu kecil */
+        max-width: 600px; /* Membatasi agar tidak terlalu lebar */
+    }
 
+    body{
+        height: 100vh;
+        background: linear-gradient(135deg, #9fa3dd, #ffffff);
+        color: black;
+        font-style: 'Poppins', sans-serif;
+        background-attachment: fixed; /* ✅ Background tetap saat scroll */
+        background-size: cover; /* ✅ Pastikan mencakup seluruh halaman */
+    }
 
     .fade-in {
         opacity: 0;
@@ -94,5 +108,12 @@
                 <img src="{{ asset('storage/home_files/profile.png') }}" alt="Foto Profil" width="200" style="float: right; margin-right: 40px;">
             </div>
         </div>
+    </div>
+
+    <div class="wrapper">
+        <main class="content">
+            @yield('content')
+        </main>
+        @include('admin.footer')
     </div>
 @endsection

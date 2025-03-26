@@ -34,13 +34,10 @@
             vertical-align: middle; /* Posisi sejajar */
         }
 
-        body {
-            font-style: 'Poppins', sans-serif !important;
-            height: 100vh;
-            background: #e6e8ff;
+        #app {
+            background: linear-gradient(135deg, #ffffff, #ffffff);
             color: black;
-            background-attachment: fixed; /* ✅ Background tetap saat scroll */
-            background-size: cover; /* ✅ Pastikan mencakup seluruh halaman */
+            font-style: 'Poppins', sans-serif;
         }
 
         .toggle-btn {

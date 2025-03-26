@@ -6,6 +6,7 @@ use App\Models\LatihanSoalModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use ParsedownExtra;
+use App\Models\PaketSoal;
 
 class LatihanSoalController extends Controller
 {
@@ -60,7 +61,7 @@ class LatihanSoalController extends Controller
     {
         $latihanSoal = LatihanSoalModel::findOrFail($id);
     
-        return view('latihan-soal.show', [
+        return view('latihan_soal.show', [
             'latihanSoal' => $latihanSoal,
             'deskripsi' => Str::markdown($latihanSoal->deskripsi),
             'soal' => Str::markdown($latihanSoal->soal),
@@ -96,5 +97,8 @@ class LatihanSoalController extends Controller
         return redirect()->route('latihan_soal.index')->with('success', 'Jawaban berhasil dikirim!');
     }
 
-
+    public function paketSoal() {
+        return $this->belongsTo(PaketSoal::class, 'paket_id');
+    }
+    
 }

@@ -40,10 +40,14 @@
     <style>
         body {
             padding-top: 60px;
+            
+        }
+        .sidebar, .nav-link, h4{
+            font-family: 'Poppins', sans-serif !important;
         }
 
         h2, #judul {
-            font-family: 'Poppins', sans-serif;
+            
             font-weight: 600;
         }
         
@@ -89,18 +93,18 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link text-light" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link text-light" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else
                             <li class="nav-item">
-                                <a class="nav-link text-light" style="margin-right: 10px; margin-left:10px;" href="{{ route('latihan-soal.index') }}">Soal</a>
+                                <a class="nav-link text-light" style="margin-right: 10px; margin-left:10px;" href="{{ route('latihan_soal.index') }}">Soal</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-light" style="margin-right: 10px; margin-left:10px;" href="{{ route('blogs.index') }}">Blogs</a>

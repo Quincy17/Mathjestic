@@ -9,7 +9,7 @@
 
 <div class="container">
     <h2>Buat Latihan Soal Baru</h2>
-    <form action="{{ route('latihan-soal.store') }}" method="POST">
+    <form action="{{ route('latihan_soal.store') }}" method="POST">
         @csrf
         <div class="mb-3">
             <label for="judul" class="form-label">Judul</label>

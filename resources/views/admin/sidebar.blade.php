@@ -35,10 +35,13 @@
             vertical-align: middle; /* Posisi sejajar */
         }
 
-        #app {
-            background: linear-gradient(135deg, #9fa3dd, #ffffff);
+        body {
+            height: 100vh;  
+            background: white;
             color: black;
-            font-style: 'Poppins', sans-serif;
+            font-style: 'Poppins', sans-serif !important    ;
+            background-attachment: fixed; /* ✅ Background tetap saat scroll */
+            background-size: cover; /* ✅ Pastikan mencakup seluruh halaman */
         }
         
         .toggle-btn {
@@ -158,7 +161,14 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('arsip.jawaban') }}" 
+                <a href="{{ route('latihan_soal.create') }}" 
+                   class="nav-link text-dark {{ request()->routeIs('soal.create') ? 'active' : '' }}" style="margin-bottom: 5px;">
+                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-hexagon-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.875 6.27c.7 .398 1.13 1.143 1.125 1.948v7.284c0 .809 -.443 1.555 -1.158 1.948l-6.75 4.27a2.269 2.269 0 0 1 -2.184 0l-6.75 -4.27a2.225 2.225 0 0 1 -1.158 -1.948v-7.285c0 -.809 .443 -1.554 1.158 -1.947l6.75 -3.98a2.33 2.33 0 0 1 2.25 0l6.75 3.98h-.033z" /><path d="M9 12h6" /><path d="M12 9v6" /></svg>
+                   Upload Soal
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('admin.arsip-jawaban') }}" 
                    class="nav-link text-dark {{ request()->routeIs('arsip.jawaban') ? 'active' : '' }}" style="margin-bottom: 5px;">
                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-archive"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 4m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /><path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" /><path d="M10 12l4 0" /></svg>
                    Arsip Jawaban

@@ -18,21 +18,27 @@
 </style>
 
 <div class="container">
-    <br><br>
+    <br>    
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2>Daftar Latihan Soal</h2>
-        <form action="{{ route('latihan_soal.index') }}" method="GET" class="mb-3">
-            <div class="input-group">
-                <input type="text" name="search" class="form-control" placeholder="Cari soal..." value="{{ request('search') }}">
-                <button type="submit" class="btn btn-primary">Cari</button>
-            </div>
-        </form>
-        
-            @if(Auth::check() && Auth::user()->role === 'admin')
-                <a href="{{ route('latihan_soal.create') }}" class="btn btn-primary">Tambah Soal</a>
-            @endif
+    <!-- Form Searching -->
+            <form action="{{ route('latihan_soal.index') }}" method="GET" class="mb-4">
+                <div class="input-group shadow">
+                    <input type="text" name="search" class="form-control" placeholder="Cari soal..." value="{{ request('search') }}">
+                    <button type="submit" class="btn btn-primary">Cari</button>
+                </div>
+            </form>
+    </div>  
+
+        <!-- Tombol Upload Soal -->
+    <div class="d-flex justify-content-between mb-3">
+        <div></div> <!-- Agar tombol tetap di kanan -->
+        @if(Auth::check() && Auth::user()->role === 'admin')
+            <a href="{{ route('latihan_soal.create') }}" class="btn btn-primary">Tambah Soal</a>
+        @endif
     </div>
-    <table class="table mt-3">
+
+    <table class="table mt-3 shadow">
         <tr>
             <th>Judul</th>
             <th>Soal</th>

@@ -7,7 +7,7 @@
 @endif
 <div class="container">
     <h2>Edit Latihan Soal</h2>
-    <form action="{{ route('latihan-soal.update', $latihanSoal->id) }}" method="POST">
+    <form action="{{ route('latihan_soal.update', $latihanSoal->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="mb-3">

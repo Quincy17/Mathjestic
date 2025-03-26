@@ -15,16 +15,18 @@
             padding-left: 20px; /* Sesuaikan padding untuk kenyamanan */
         }
     </style>
-<div class="container pb-5">
+    <div class="container pb-5">
     <br><br>
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2>Daftar Modul</h2>
         
         <!-- Form Searching -->
-        <form action="{{ route('soal.index') }}" method="GET" class="d-flex">
-            <input type="text" name="search" class="form-control me-2 " placeholder="Cari soal..." value="{{ request('search') }}">
-            <button type="submit" class="btn btn-outline-primary">Cari</button>
-        </form>
+        <div class="shadow">
+            <form action="{{ route('soal.index') }}" method="GET" class="d-flex">
+                <input type="text" name="search" class="form-control me-2 " placeholder="Cari soal..." value="{{ request('search') }}">
+                <button type="submit" class="btn btn-outline-primary">Cari</button>
+            </form>
+        </div>
     </div>
 
     <!-- Tombol Upload Soal -->
