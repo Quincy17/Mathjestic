@@ -81,4 +81,6 @@ class JawabanMuridController extends Controller {
         $jawaban = JawabanMuridModel::findOrFail($id);
         return view('latihan_soal.show-jawaban', compact('jawaban'));
     }
+
+    
 }

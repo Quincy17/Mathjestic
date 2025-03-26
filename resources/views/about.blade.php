@@ -28,7 +28,7 @@
 
     body{
         height: 100vh;
-        background: linear-gradient(135deg, #9fa3dd, #ffffff);
+        background: white;
         color: black;
         font-style: 'Poppins', sans-serif;
         background-attachment: fixed; /* ✅ Background tetap saat scroll */

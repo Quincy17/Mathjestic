@@ -17,6 +17,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\LatihanSoalController;
 use App\Http\Controllers\JawabanMuridController;
 use App\Http\Controllers\PaketSoalController;
+use App\Models\LatihanSoalModel;
 
 // ✅ Bisa diakses tanpa login
 Route::get('/home', [HomeController::class, 'index']);
@@ -55,7 +56,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/latihan_soal/create', [LatihanSoalController::class, 'create'])->name('latihan_soal.create');
     Route::post('/latihan_soal', [LatihanSoalController::class, 'store'])->name('latihan_soal.store');
     Route::get('/latihan_soal/{id}', [LatihanSoalController::class, 'show'])->name('latihan_soal.show');
-    Route::get('/latihan_soal/{id}/edit', [LatihanSoalController::class, 'edit'])->name('latihan_soal.edit');
+    Route::get('/latihan_soal/{id}/edit', [LatihanSoalController::class, 'edit'])->name('latihan_   ');
     Route::put('/latihan_soal/{id}', [LatihanSoalController::class, 'update'])->name('latihan_soal.update');
     Route::delete('/latihan_soal/{id}', [LatihanSoalController::class, 'destroy'])->name('latihan_soal.destroy');
     Route::get('/latihan_soal/{id}/kerjakan', [LatihanSoalController::class, 'kerjakan'])->name('latihan_soal.kerjakan');
@@ -68,11 +69,11 @@ Route::middleware(['auth'])->group(function () {
     })->name('latihan_soal.submit');
     Route::post('/latihan-soal/{latihanSoal}/jawaban', [JawabanMuridController::class, 'store'])->name('jawaban_murid.store');
 
+    //Paket Soal Murid
+    Route::get('/paket-soal/{id}/kerjakan', [PaketSoalController::class, 'kerjakan'])->name('paket-soal.kerjakan');
+    Route::post('/paket-soal/{id}/submit', [PaketSoalController::class, 'submitJawaban'])->name('paket-soal.submit');
 
-    
-
-
-}); 
+});     
 
 Route::get('/admin/logs', function () {
     $logs = LogsModel::latest()->get();
@@ -80,19 +81,24 @@ Route::get('/admin/logs', function () {
 })->middleware('admin');
 
 Route::middleware(['auth', 'admin'])->group(function () {
+    
+});
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/paket-soal', [PaketSoalController::class, 'index'])->name('paket-soal.index');
+    Route::get('/paket-soal/create', [PaketSoalController::class, 'create'])->name('paket-soal.create');
+    Route::post('/paket-soal', [PaketSoalController::class, 'store'])->name('paket-soal.store');
+    Route::get('/paket-soal/{id}', [PaketSoalController::class, 'show'])->name('paket-soal.show');
+    Route::get('/paket-soal/{id}/edit', [PaketSoalController::class, 'edit'])->name('paket-soal.edit');
+    Route::put('/paket-soal/{id}', [PaketSoalController::class, 'update'])->name('paket-soal.update');
+    Route::delete('/paket-soal/{id}', [PaketSoalController::class, 'destroy'])->name('paket-soal.destroy');
+
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/logs', [AdminController::class, 'logs'])->name('admin.logs');
     Route::get('/admin/data-website', [AdminController::class, 'dataWebsite'])->name('admin.dataWebsite');
     Route::get('/admin/arsip-jawaban', [JawabanMuridController::class, 'arsipJawaban'])->name('arsip.jawaban');
     Route::get('/latihan_soal/jawaban/{id}', [JawabanMuridController::class, 'show'])->name('latihan_soal.show-jawaban');
     Route::get('/admin/arsip-jawaban', [JawabanMuridController::class, 'index'])->name('admin.arsip-jawaban');
-});
-
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/paket-soal', [PaketSoalController::class, 'index'])->name('paket-soal.index');
-    Route::get('/paket-soal/create', [PaketSoalController::class, 'create'])->name('paket-soal.create');
-    Route::post('/paket-soal', [PaketSoalController::class, 'store'])->name('paket-soal.store');
-    Route::get('/paket-soal/{id}', [PaketSoalController::class, 'show'])->name('paket-soal.show');
 });
 
 Auth::routes();

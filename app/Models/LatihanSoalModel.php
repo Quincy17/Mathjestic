@@ -20,4 +20,9 @@ class LatihanSoalModel extends Model
         return $this->hasMany(JawabanMuridModel::class);
     }
     
+    public function paketSoal() {
+        return $this->belongsToMany(PaketSoal::class, 'paket_soal_detail', 'soal_id', 'paket_id');
+    }
+
+    
 }
