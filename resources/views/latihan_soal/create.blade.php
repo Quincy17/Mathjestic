@@ -35,11 +35,11 @@
         </div>
 
         <div class="mb-3">
-            <label for="jawaban" class="form-label">Jawaban (Markdown & MathJax)</label>
-            <textarea class="form-control" id="jawaban" name="jawaban" rows="5" required oninput="updatePreview('jawaban')"></textarea>
+            <label for="kunci_jawaban" class="form-label">Kunci Jawaban (Markdown & MathJax)</label>
+            <textarea class="form-control" id="kunci_jawaban" name="kunci_jawaban" rows="5" required oninput="updatePreview('kunci_jawaban')"></textarea>
             <div class="mt-2 border p-2 bg-light">
                 <strong>Preview:</strong>
-                <div id="jawaban-preview" class="p-2"></div>
+                <div id="kunci_jawaban-preview" class="p-2"></div>
             </div>
         </div>
 

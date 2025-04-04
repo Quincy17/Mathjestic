@@ -23,8 +23,8 @@
             <textarea class="form-control" id="soal" name="soal" rows="5" required>{{ $latihanSoal->soal }}</textarea>
         </div>
         <div class="mb-3">
-            <label for="jawaban" class="form-label">Jawaban</label>
-            <textarea class="form-control" id="jawaban" name="jawaban" rows="5" required>{{ $latihanSoal->soal }}</textarea>
+            <label for="kunci_jawaban" class="form-label">Kunci Jawaban</label>
+            <textarea class="form-control" id="kunci_jawaban" name="kunci_jawaban" rows="5" required>{{ $latihanSoal->soal }}</textarea>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
     </form>

@@ -42,7 +42,7 @@ class LatihanSoalController extends Controller
             'judul' => 'required',
             'deskripsi' => 'required|string',
             'soal' => 'required',
-            'jawaban' => 'required',
+            'kunci_jawaban' => 'required',
         ]);
         LatihanSoalModel::create($request->all());
         return redirect()->route('latihan_soal.index')->with('success', 'Soal berhasil ditambahkan!');
@@ -59,7 +59,7 @@ class LatihanSoalController extends Controller
             'judul' => 'required',
             'deskripsi' => 'required|string',
             'soal' => 'required',
-            'jawaban' => 'required',
+            'kunci_jawaban' => 'required',
         ]);
     
         $latihanSoal = LatihanSoalModel::findOrFail($id);
@@ -77,7 +77,7 @@ class LatihanSoalController extends Controller
             'latihanSoal' => $latihanSoal,
             'deskripsi' => Str::markdown($latihanSoal->deskripsi),
             'soal' => Str::markdown($latihanSoal->soal),
-            'jawaban' => Str::markdown($latihanSoal->jawaban)
+            'kunci_jawaban' => Str::markdown($latihanSoal->kunci_jawaban)
         ]);
     }
     

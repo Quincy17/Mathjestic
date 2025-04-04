@@ -5,16 +5,25 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
-    public function up() {
+    public function up()
+    {
         Schema::table('latihan_soal', function (Blueprint $table) {
-            $table->foreignId('paket_id')->nullable()->constrained('paket_soal')->onDelete('cascade');
+            if (!Schema::hasColumn('latihan_soal', 'paket_id')) {
+                $table->unsignedBigInteger('paket_id')->nullable()->after('id');
+                $table->foreign('paket_id')->references('id')->on('paket_soal')->onDelete('cascade');
+            }
         });
     }
 
-    public function down() {
+
+    public function down()
+    {
         Schema::table('latihan_soal', function (Blueprint $table) {
-            $table->dropForeign(['paket_id']);
-            $table->dropColumn('paket_id');
+            if (Schema::hasColumn('latihan_soal', 'paket_id')) {
+                $table->dropForeign(['paket_id']);
+                $table->dropColumn('paket_id');
+            }
         });
     }
+
 };

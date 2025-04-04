@@ -10,5 +10,10 @@ class PaketSoalDetail extends Model {
 
     protected $table = 'paket_soal_detail';
     protected $fillable = ['paket_id', 'soal_id'];
+
+    public function latihanSoal()
+    {
+        return $this->belongsTo(LatihanSoalModel::class, 'latihan_soal_id');
+    }
 }
 

@@ -7,13 +7,16 @@ use App\Models\JawabanMuridModel;
 use App\Models\LatihanSoalModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Models\PaketSoal;
+use Illuminate\Support\Facades\DB;
+use App\Models\SkorModel;
 
 class JawabanMuridController extends Controller {
     public function index(Request $request)
     {
         $search = $request->input('search');
     
-        $jawabanMurid = JawabanMuridModel::with(['murid', 'latihanSoal'])
+        $jawabanMurid = JawabanMuridModel::with(['murid', 'paketSoal'])
             ->when($search, function ($query) use ($search) {
                 return $query->whereHas('murid', function ($q) use ($search) {
                     $q->where('name', 'like', "%{$search}%");
@@ -25,62 +28,99 @@ class JawabanMuridController extends Controller {
     
         return view('admin.arsip-jawaban', compact('jawabanMurid', 'search'));
     }
-    public function store(Request $request, $latihanSoalId)
+
+    public function submitPaket(Request $request, $paketSoalId)
     {
-        $request->validate([
-            'jawaban' => 'required|string',
-        ]);
+        $userId = Auth::id();
+        $paket = PaketSoal::with('soal')->findOrFail($paketSoalId);
+        $jawabanInput = $request->input('jawaban', []);
 
-        $jawabanMurid = $request->jawaban;
-        $latihanSoal = LatihanSoalModel::findOrFail($latihanSoalId);
-        $kunciJawaban = $latihanSoal->jawaban;
+        // 🔥 1. Hapus jawaban lama sebelum menyimpan yang baru
+        JawabanMuridModel::where('user_id', $userId)
+            ->where('paket_soal_id', $paketSoalId)
+            ->delete();
 
-        // Debugging: Log nilai jawaban untuk memeriksa apakah memang sama
-        Log::info('Jawaban Murid (Original): ' . $jawabanMurid);
-        Log::info('Kunci Jawaban (Original): ' . $kunciJawaban);
+        $totalPoin = 0;
 
-        // Normalisasi jawaban (menghilangkan spasi berlebih dan menyamakan huruf kecil)
-        // Membersihkan karakter tersembunyi
-        function bersihkanJawaban($jawaban) {
-            return preg_replace('/[^\PC\s]/u', '', trim(strtolower($jawaban)));
+        foreach ($paket->soal as $soal) {
+            $jawabanMurid = $jawabanInput[$soal->id] ?? '';
+            $kunciJawaban = $soal->kunci_jawaban;
+
+            // Normalisasi jawaban
+            $jawabanMuridBersih = trim(strtolower($jawabanMurid));
+            $kunciJawabanBersih = trim(strtolower($kunciJawaban));
+            $status = ($jawabanMuridBersih === $kunciJawabanBersih) ? 'benar' : 'salah';
+
+            // Ambil poin dari pivot
+            $poin = $soal->pivot->poin ?? 0;
+            $poinDidapat = $status === 'benar' ? $poin : 0;
+            $totalPoin += $poinDidapat;
+
+            // Simpan jawaban baru
+            JawabanMuridModel::create([
+                'user_id' => $userId,
+                'latihan_soal_id' => $soal->id,
+                'paket_soal_id' => $paketSoalId,
+                'jawaban' => $jawabanMurid,
+                'status' => $status,
+                'poin_didapat' => $poinDidapat,
+            ]);
         }
 
-        $jawabanMuridBersih = bersihkanJawaban($jawabanMurid);
-        $kunciJawabanBersih = bersihkanJawaban($kunciJawaban);
+        // 🔥 2. Hapus skor lama sebelum menyimpan skor baru
+        SkorModel::where('user_id', $userId)
+            ->where('paket_soal_id', $paketSoalId)
+            ->delete();
 
-        Log::info('Jawaban Murid (HEX): ' . bin2hex($jawabanMuridBersih));
-        Log::info('Kunci Jawaban (HEX): ' . bin2hex($kunciJawabanBersih));
-
-        $status = ($jawabanMuridBersih === $kunciJawabanBersih) ? 'benar' : 'salah';
-
-        Log::info('Jawaban Murid (Bersih): ' . $jawabanMuridBersih);
-        Log::info('Kunci Jawaban (Bersih): ' . $kunciJawabanBersih);
-        Log::info('Status: ' . $status);
-        
-        // Simpan jawaban murid
-        JawabanMuridModel::create([
-            'user_id' => auth()->id(),  
-            'latihan_soal_id' => $latihanSoalId,
-            'jawaban' => $jawabanMurid,
-            'status' => $status, 
+        // 🔥 3. Simpan skor baru
+        SkorModel::create([
+            'user_id' => $userId,
+            'paket_soal_id' => $paketSoalId,
+            'jumlah_poin' => $totalPoin,
         ]);
 
-        return redirect()->route('latihan_soal.submit', $latihanSoalId)
-            ->with('success', 'Jawaban berhasil dikirim dan dikoreksi! Hasil: ' . ucfirst($status));
+        return redirect()->route('latihan_soal.index')
+            ->with('success', 'Jawaban berhasil dikoreksi. Total poin: ' . $totalPoin);
     }
 
 
-    public function arsipJawaban()
-    {
-        $jawabanMurid = JawabanMuridModel::with(['murid', 'latihanSoal'])->latest()->get();
-        return view('admin.arsip-jawaban', compact('jawabanMurid'));
-    }
-
+    
     public function show($id)
     {
         $jawaban = JawabanMuridModel::findOrFail($id);
         return view('latihan_soal.show-jawaban', compact('jawaban'));
     }
-
     
+    public function arsipJawaban(Request $request)
+    {
+        $search = $request->input('search');
+
+        $arsip = DB::table('skor_murid')
+            ->join('m_user', 'm_user.user_id', '=', 'skor_murid.user_id') // Menggunakan m_user.user_id
+            ->join('paket_soal', 'paket_soal.id', '=', 'skor_murid.paket_soal_id')
+            ->select('m_user.name', 'paket_soal.nama_paket', 'skor_murid.jumlah_poin', 'skor_murid.paket_soal_id', 'skor_murid.user_id')
+            ->when($search, function ($query) use ($search) {
+                return $query->where('m_user.name', 'like', "%{$search}%")
+                            ->orWhere('paket_soal.nama_paket', 'like', "%{$search}%");
+            })
+            ->orderByDesc('skor_murid.updated_at')
+            ->paginate(10); 
+
+        return view('admin.arsip-jawaban', compact('arsip'));
+    }
+
+    public function detailJawaban($paketSoalId, $userId)
+    {
+        $jawabanMurid = JawabanMuridModel::where('paket_soal_id', $paketSoalId)
+            ->where('user_id', $userId)
+            ->with('latihanSoal')
+            ->get();
+
+        // Menggunakan m_user.user_id
+        $murid = DB::table('m_user')->where('user_id', $userId)->value('name');
+        $paketSoal = DB::table('paket_soal')->where('id', $paketSoalId)->value('nama_paket');
+
+        return view('admin.detail-jawaban', compact('jawabanMurid', 'murid', 'paketSoal'));
+    }
+
 }

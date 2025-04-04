@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class JawabanMuridModel extends Model {
     use HasFactory;
     protected $table = 'jawaban_murid';
-    protected $fillable = ['user_id', 'latihan_soal_id', 'jawaban','status'];
+    protected $fillable = ['user_id', 'latihan_soal_id','paket_soal_id','poin_didapat', 'jawaban','status'];
 
     public function user() {
         return $this->belongsTo(User::class);
@@ -25,4 +25,10 @@ class JawabanMuridModel extends Model {
     {
         return $this->belongsTo(LatihanSoalModel::class, 'latihan_soal_id');
     }
+
+    public function paketSoal()
+    {
+        return $this->belongsTo(PaketSoal::class, 'paket_soal_id', 'id');
+    }
+
 }

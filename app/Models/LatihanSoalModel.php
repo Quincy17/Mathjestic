@@ -9,7 +9,7 @@ class LatihanSoalModel extends Model
 {
     use HasFactory;
     protected $table = 'latihan_soal';
-    protected $fillable = ['judul', 'deskripsi', 'soal', 'jawaban','jawaban_murid'];
+    protected $fillable = ['judul', 'deskripsi', 'soal', 'kunci_jawaban','jawaban_murid'];
 
     public function user()
     {

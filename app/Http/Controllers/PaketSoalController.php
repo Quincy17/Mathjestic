@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\PaketSoal;
 use App\Models\LatihanSoalModel;
 use App\Models\JawabanMuridModel;
+use Illuminate\Support\Facades\DB;
+use App\Models\PaketSoalDetail;
 
 class PaketSoalController extends Controller {
     public function index() {
@@ -22,7 +24,8 @@ class PaketSoalController extends Controller {
         $request->validate([
             'nama_paket' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
-            'soal' => 'required|array'
+            'soal' => 'required|array',
+            'poin' => 'required|array',
         ]);
 
         $paket = PaketSoal::create([
@@ -30,8 +33,26 @@ class PaketSoalController extends Controller {
             'deskripsi' => $request->deskripsi
         ]);
 
-        $paket->soal()->attach($request->soal);
+        // Simpan soal yang dipilih ke tabel pivot `poin_soal`
+        foreach ($request->soal as $soalId) {
+            DB::table('poin_soal')->insert([
+                'paket_soal_id' => $paket->id,
+                'latihan_soal_id' => $soalId,
+                'poin' => $request->poin[$soalId],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
 
+        // Simpan soal juga ke tabel `paket_soal_detail`
+        foreach ($request->soal as $soalId) {
+            PaketSoalDetail::create([
+                'paket_id' => $paket->id,
+                'soal_id' => $soalId,
+                'poin' => $request->poin[$soalId],
+            ]);
+        }
+        
         return redirect()->route('latihan_soal.index')->with('success', 'Paket Soal berhasil dibuat!');
     }
 
@@ -120,4 +141,10 @@ class PaketSoalController extends Controller {
         return redirect()->route('latihan_soal.index')->with('success', 'Jawaban berhasil dikirim!');
     }
 
+    public function getSoalPaket()
+    {
+        $soalList = LatihanSoalModel::select('id', 'judul', 'soal')->get();
+
+        return response()->json($soalList);
+    }
 }

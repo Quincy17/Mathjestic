@@ -56,7 +56,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/latihan_soal/create', [LatihanSoalController::class, 'create'])->name('latihan_soal.create');
     Route::post('/latihan_soal', [LatihanSoalController::class, 'store'])->name('latihan_soal.store');
     Route::get('/latihan_soal/{id}', [LatihanSoalController::class, 'show'])->name('latihan_soal.show');
-    Route::get('/latihan_soal/{id}/edit', [LatihanSoalController::class, 'edit'])->name('latihan_   ');
+    Route::get('/latihan_soal/{id}/edit', [LatihanSoalController::class, 'edit'])->name('latihan_soal.edit');
     Route::put('/latihan_soal/{id}', [LatihanSoalController::class, 'update'])->name('latihan_soal.update');
     Route::delete('/latihan_soal/{id}', [LatihanSoalController::class, 'destroy'])->name('latihan_soal.destroy');
     Route::get('/latihan_soal/{id}/kerjakan', [LatihanSoalController::class, 'kerjakan'])->name('latihan_soal.kerjakan');
@@ -71,7 +71,7 @@ Route::middleware(['auth'])->group(function () {
 
     //Paket Soal Murid
     Route::get('/paket-soal/{id}/kerjakan', [PaketSoalController::class, 'kerjakan'])->name('paket-soal.kerjakan');
-    Route::post('/paket-soal/{id}/submit', [PaketSoalController::class, 'submitJawaban'])->name('paket-soal.submit');
+    Route::post('/paket-soal/{id}/submit', [JawabanMuridController::class, 'submitPaket'])->name('paket-soal.submit');
 
 });     
 
@@ -99,6 +99,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/arsip-jawaban', [JawabanMuridController::class, 'arsipJawaban'])->name('arsip.jawaban');
     Route::get('/latihan_soal/jawaban/{id}', [JawabanMuridController::class, 'show'])->name('latihan_soal.show-jawaban');
     Route::get('/admin/arsip-jawaban', [JawabanMuridController::class, 'index'])->name('admin.arsip-jawaban');
+
+    Route::get('/admin/arsip-jawaban', [JawabanMuridController::class, 'arsipJawaban'])->name('admin.arsip-jawaban');
+    Route::get('/arsip-jawaban/{paket_soal_id}/{user_id}', [JawabanMuridController::class, 'detailJawaban'])->name('admin.detail-jawaban');
+
 });
 
 Auth::routes();
