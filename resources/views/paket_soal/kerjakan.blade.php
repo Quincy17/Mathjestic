@@ -9,11 +9,11 @@
     <h2>Paket Soal: {{ $judul }}</h2>
     <form action="{{ route('paket-soal.submit', $paket->id) }}" method="POST">
         @csrf
-        @foreach($paket->soal as $soal)
+        @foreach($paket->soal as $soal) 
             <div class="mb-4">
                 <h5>{{ $soal->judul }}</h5>
                 <p>{!! $soal->soal !!}</p>
-                <input type="text" name="jawaban[{{ $soal->id }}]" class="form-control" placeholder="Jawaban Anda" required>
+                <textarea name="jawaban[{{ $soal->id }}]" class="form-control form-control-lg" rows="3" placeholder="Jawaban Anda" required></textarea>
             </div>
         @endforeach
     

@@ -43,15 +43,6 @@ class PaketSoalController extends Controller {
                 'updated_at' => now(),
             ]);
         }
-
-        // Simpan soal juga ke tabel `paket_soal_detail`
-        foreach ($request->soal as $soalId) {
-            PaketSoalDetail::create([
-                'paket_id' => $paket->id,
-                'soal_id' => $soalId,
-                'poin' => $request->poin[$soalId],
-            ]);
-        }
         
         return redirect()->route('latihan_soal.index')->with('success', 'Paket Soal berhasil dibuat!');
     }
